@@ -1,0 +1,1230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Outbound Dashboard — April 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --peach: #FFD4B8;
+  --coral: #FFB6A3;
+  --rose: #F5A89C;
+  --blush: #E89BA8;
+  --mauve: #C99BC4;
+  --lilac: #B4A3D6;
+  --lavender: #A8B5DC;
+
+  --ink: #2D2438;
+  --ink-soft: #4A3D5A;
+  --ink-mute: #7A6B89;
+
+  --cream: #FFF8F2;
+  --paper: #FFFAF5;
+
+  --sage: #7BA89A;
+  --gold: #D4A85C;
+  --gold-soft: #F0DBA8;
+  --rust: #D17B5C;
+
+  --brett: #F5A89C;
+  --brett-deep: #A04E3D;
+  --brett-tint: rgba(245, 168, 156, 0.15);
+
+  --dylan: #C99BC4;
+  --dylan-deep: #6E3F75;
+  --dylan-tint: rgba(201, 155, 196, 0.18);
+
+  --trevor: #9AAEDB;
+  --trevor-deep: #3D4D85;
+  --trevor-tint: rgba(154, 174, 219, 0.18);
+
+  --shadow-soft: 0 4px 20px rgba(125, 90, 140, 0.08);
+  --shadow-card: 0 8px 32px rgba(125, 90, 140, 0.12);
+  --shadow-hover: 0 16px 48px rgba(125, 90, 140, 0.18);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  font-family: 'Inter', system-ui, sans-serif;
+  color: var(--ink);
+  background: linear-gradient(170deg, #FBF1EA 0%, #F7E9E5 35%, #EDE3EC 70%, #E1E2EE 100%);
+  background-attachment: fixed;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  letter-spacing: -0.005em;
+}
+
+.grain {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.18;
+  z-index: 1;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.18 0 0 0 0 0.14 0 0 0 0 0.22 0 0 0 0.5 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: multiply;
+}
+
+.wrap {
+  position: relative;
+  z-index: 2;
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 36px 32px 80px;
+}
+
+/* HEADER */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.title-block { flex: 1; min-width: 320px; }
+
+.eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.eyebrow::before {
+  content: '';
+  width: 24px;
+  height: 1px;
+  background: var(--ink-mute);
+}
+
+h1 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: clamp(36px, 4.5vw, 52px);
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+}
+h1 em {
+  font-style: normal;
+  font-weight: 400;
+  color: var(--rust);
+}
+
+.subtitle {
+  margin-top: 10px;
+  font-size: 15px;
+  color: var(--ink-soft);
+  max-width: 520px;
+  line-height: 1.5;
+}
+
+.date-stamp {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--ink-mute);
+  text-align: right;
+  background: rgba(255, 250, 245, 0.55);
+  padding: 12px 18px;
+  border-radius: 12px;
+  border: 1px solid rgba(125, 90, 140, 0.1);
+  backdrop-filter: blur(8px);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.date-stamp .big {
+  display: block;
+  font-family: 'Inter', sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-top: 4px;
+  letter-spacing: -0.015em;
+  text-transform: none;
+}
+
+/* TABS */
+.tab-nav {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 28px;
+  background: rgba(255, 250, 245, 0.5);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 6px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  width: fit-content;
+  box-shadow: var(--shadow-soft);
+}
+
+.tab {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 10px 22px;
+  border-radius: 10px;
+  border: none;
+  background: transparent;
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  letter-spacing: -0.01em;
+}
+
+.tab:hover { color: var(--ink); }
+
+.tab.active {
+  background: var(--ink);
+  color: var(--cream);
+  box-shadow: 0 2px 8px rgba(45, 36, 56, 0.18);
+}
+
+.tab .count {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  opacity: 0.7;
+}
+
+.view {
+  display: none;
+}
+.view.active {
+  display: block;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* SECTION HEADING */
+.section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 18px;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.section-head h2 {
+  font-family: 'Inter', sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+
+.legend {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+.legend-item { display: flex; align-items: center; gap: 6px; }
+.legend-item .crown {
+  display: inline-flex;
+  width: 18px;
+  height: 18px;
+  align-items: center;
+  justify-content: center;
+  background: var(--gold-soft);
+  border-radius: 50%;
+  color: var(--gold);
+  font-size: 11px;
+}
+.legend-item .fire {
+  display: inline-flex;
+  width: 18px;
+  height: 18px;
+  align-items: center;
+  justify-content: center;
+  background: rgba(154,174,219,0.4);
+  border-radius: 50%;
+  color: #3D4D85;
+  font-size: 11px;
+}
+
+/* TEAM GRID — vertical stack with inline drill-down */
+.team-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.team-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.team-card {
+  background: rgba(255, 250, 245, 0.6);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 20px;
+  padding: 24px;
+  cursor: pointer;
+  transition: all 0.22s ease;
+  box-shadow: var(--shadow-soft);
+  position: relative;
+  overflow: hidden;
+}
+
+.team-card.brett { color: var(--brett); }
+.team-card.dylan { color: var(--dylan); }
+.team-card.trevor { color: var(--trevor); }
+
+.team-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
+}
+
+.team-card.is-active {
+  border-radius: 20px 20px 0 0;
+  box-shadow: var(--shadow-card);
+  transform: translateY(0);
+}
+.team-card.brett.is-active { border-color: var(--brett); border-bottom-color: rgba(255,255,255,0.4); }
+.team-card.dylan.is-active { border-color: var(--dylan); border-bottom-color: rgba(255,255,255,0.4); }
+.team-card.trevor.is-active { border-color: var(--trevor); border-bottom-color: rgba(255,255,255,0.4); }
+
+.team-tag-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.team-name {
+  font-family: 'Inter', sans-serif;
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.team-name .swatch {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+.brett .team-name .swatch { background: var(--brett); }
+.dylan .team-name .swatch { background: var(--dylan); }
+.trevor .team-name .swatch { background: var(--trevor); }
+
+.rep-count {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+
+.kpi-stack {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.kpi {
+  position: relative;
+  padding: 10px 11px;
+  border-radius: 11px;
+  background: rgba(255, 255, 255, 0.45);
+  border: 1px solid rgba(125, 90, 140, 0.06);
+  transition: all 0.2s ease;
+}
+
+.kpi.is-leader {
+  background: linear-gradient(135deg, var(--gold-soft) 0%, rgba(244, 224, 176, 0.4) 100%);
+  border: 1px solid var(--gold);
+  box-shadow: 0 4px 14px rgba(212, 168, 92, 0.18);
+}
+
+.kpi.is-tied {
+  background: linear-gradient(135deg, rgba(154, 174, 219, 0.35) 0%, rgba(184, 200, 230, 0.2) 100%);
+  border: 1px solid #6B83C4;
+  box-shadow: 0 4px 14px rgba(107, 131, 196, 0.22);
+  position: relative;
+}
+.kpi.is-tied::after {
+  content: 'BREAK IT';
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 7px;
+  letter-spacing: 0.12em;
+  color: #3D4D85;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.7);
+  padding: 2px 5px;
+  border-radius: 3px;
+}
+
+.kpi-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.kpi.is-leader .kpi-label { color: #8B6F2A; }
+.kpi.is-tied .kpi-label { color: #3D4D85; }
+
+.kpi-crown {
+  display: inline-flex;
+  width: 14px;
+  height: 14px;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  line-height: 1;
+}
+
+.kpi-value {
+  font-family: 'Inter', sans-serif;
+  font-size: 19px;
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.kpi-sub {
+  font-size: 11px;
+  color: var(--ink-mute);
+  margin-top: 2px;
+}
+
+.expand-hint {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 12px;
+  border-top: 1px dashed rgba(125, 90, 140, 0.15);
+}
+
+.expand-hint .arrow {
+  transition: transform 0.25s ease;
+  display: inline-block;
+}
+
+.team-card.is-active .expand-hint .arrow {
+  transform: rotate(180deg);
+}
+
+/* INLINE DRILL-DOWN — sits directly below its team card */
+.drilldown {
+  background: rgba(255, 250, 245, 0.55);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-left: 1px solid rgba(255, 255, 255, 0.6);
+  border-right: 1px solid rgba(255, 255, 255, 0.6);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 0 0 20px 20px;
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  display: none;
+  animation: slideDown 0.3s ease;
+}
+.drilldown.brett { border-color: var(--brett); border-top: none; }
+.drilldown.dylan { border-color: var(--dylan); border-top: none; }
+.drilldown.trevor { border-color: var(--trevor); border-top: none; }
+
+.drilldown.is-open { display: block; }
+
+@keyframes slideDown {
+  from { opacity: 0; max-height: 0; }
+  to { opacity: 1; max-height: 1500px; }
+}
+
+.rep-table-header,
+.rep-row {
+  display: grid;
+  grid-template-columns: 28px minmax(140px, 1.3fr) repeat(10, 1fr);
+  align-items: center;
+  gap: 6px;
+  padding: 12px 18px;
+  font-size: 12.5px;
+}
+
+.rep-table-header {
+  background: rgba(45, 36, 56, 0.92);
+  color: rgba(255, 255, 255, 0.95);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.rep-table-header .metric { color: rgba(255, 255, 255, 0.95) !important; }
+.rep-table-header div { color: rgba(255, 255, 255, 0.95) !important; }
+
+.rep-row {
+  border-bottom: 1px solid rgba(125, 90, 140, 0.06);
+  transition: background 0.18s ease;
+}
+.rep-row:last-child { border-bottom: none; }
+.rep-row:hover { background: rgba(255, 255, 255, 0.4); }
+
+.rep-rank {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-mute);
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.rep-name {
+  font-weight: 500;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.metric {
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  color: var(--ink-soft);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+}
+
+.metric .value-text { font-weight: 500; }
+.metric.is-rep-leader .value-text { color: var(--gold); font-weight: 700; }
+.metric.is-rep-leader { background: linear-gradient(90deg, transparent 0%, rgba(244, 224, 176, 0.28) 100%); padding: 4px 8px; border-radius: 8px; margin: -4px 0; }
+
+.metric.is-rep-tied .value-text { color: #3D4D85; font-weight: 700; }
+.metric.is-rep-tied { background: linear-gradient(90deg, transparent 0%, rgba(154, 174, 219, 0.28) 100%); padding: 4px 8px; border-radius: 8px; margin: -4px 0; }
+
+.metric .crown-mini {
+  font-size: 11px;
+  line-height: 1;
+  display: inline-block;
+}
+
+/* Daily movement deltas (green up-arrows for positive change) */
+.delta-up {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9.5px;
+  font-weight: 600;
+  color: var(--sage);
+  background: rgba(123, 168, 154, 0.16);
+  padding: 1px 5px;
+  border-radius: 3px;
+  letter-spacing: 0.02em;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  margin-left: 4px;
+  white-space: nowrap;
+}
+.delta-up::before {
+  content: '↑';
+  font-size: 10px;
+}
+
+.kpi .delta-up {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  font-size: 9px;
+  padding: 2px 5px;
+}
+.kpi.is-leader .delta-up,
+.kpi.is-tied .delta-up {
+  /* When kpi card already has a corner badge, push delta to under the value */
+  position: static;
+  margin-left: 0;
+  margin-top: 4px;
+  display: inline-flex;
+}
+
+/* LEADERBOARD VIEW */
+.lb-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.filter-group {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.chip {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(125, 90, 140, 0.18);
+  background: rgba(255, 250, 245, 0.55);
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  backdrop-filter: blur(8px);
+}
+
+.chip:hover {
+  background: rgba(255, 250, 245, 0.85);
+  transform: translateY(-1px);
+}
+
+.chip .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.chip.active {
+  background: var(--ink);
+  color: var(--cream);
+  border-color: var(--ink);
+}
+
+.chip.active .dot { background: var(--cream) !important; }
+
+.sort-control {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+
+.sort-select {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  padding: 8px 14px 8px 14px;
+  padding-right: 36px;
+  border-radius: 999px;
+  border: 1px solid rgba(125, 90, 140, 0.18);
+  background: rgba(255, 250, 245, 0.55);
+  color: var(--ink);
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23583B65' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 10px;
+}
+
+.lb-board {
+  background: rgba(255, 250, 245, 0.5);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 22px;
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+}
+
+.lb-header,
+.lb-row {
+  display: grid;
+  grid-template-columns: 44px minmax(150px, 1.6fr) 70px repeat(10, 1fr);
+  align-items: center;
+  gap: 6px;
+  padding: 12px 18px;
+  font-size: 12.5px;
+}
+
+.lb-header {
+  background: rgba(45, 36, 56, 0.92);
+  color: rgba(255, 255, 255, 0.95);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+/* Force ALL header text/metric cells to bright white, override any inherited classes */
+.lb-header .metric,
+.lb-header .metric.bold,
+.lb-header .metric.high,
+.lb-header div {
+  color: rgba(255, 255, 255, 0.95) !important;
+}
+
+.lb-header .sortable {
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.15s, font-weight 0.15s;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+.lb-header .sortable:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+.lb-header .sortable.active {
+  background: rgba(255, 255, 255, 0.18);
+  font-weight: 700;
+  box-shadow: inset 0 0 0 1px rgba(255, 248, 242, 0.4);
+}
+
+.lb-row {
+  border-bottom: 1px solid rgba(125, 90, 140, 0.06);
+  transition: background 0.18s ease;
+}
+.lb-row:last-child { border-bottom: none; }
+.lb-row:hover { background: rgba(255, 255, 255, 0.4); }
+
+.lb-row.is-db {
+  background: linear-gradient(90deg, rgba(201, 155, 196, 0.14) 0%, rgba(201, 155, 196, 0.04) 100%);
+}
+.lb-row.is-db:hover {
+  background: linear-gradient(90deg, rgba(201, 155, 196, 0.22) 0%, rgba(201, 155, 196, 0.08) 100%);
+}
+
+.rank {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink-mute);
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+.rank.top-1 { color: var(--rust); font-size: 16px; }
+.rank.top-2 { color: var(--blush); font-size: 15px; }
+.rank.top-3 { color: var(--mauve); font-size: 15px; }
+
+.rep-cell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.team-tag {
+  width: 4px;
+  height: 24px;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+.team-tag.brett { background: var(--brett); }
+.team-tag.dylan { background: var(--dylan); }
+.team-tag.trevor { background: var(--trevor); }
+
+.rep-name-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+.rep-name-stack .mgr {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  color: var(--ink-mute);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.team-pill {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 3px 8px;
+  border-radius: 999px;
+  text-align: center;
+  font-weight: 500;
+}
+.team-pill.brett { background: rgba(245, 168, 156, 0.25); color: #A04E3D; }
+.team-pill.dylan { background: rgba(201, 155, 196, 0.28); color: #6E3F75; }
+.team-pill.trevor { background: rgba(154, 174, 219, 0.3); color: #3D4D85; }
+
+.metric.bold { color: var(--ink); font-weight: 500; }
+.metric.high { color: var(--sage); font-weight: 600; }
+
+/* MOBILE */
+@media (max-width: 1100px) {
+  .kpi-stack { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 800px) {
+  .lb-row, .lb-header,
+  .rep-row, .rep-table-header {
+    font-size: 11.5px;
+    padding: 10px 14px;
+    gap: 4px;
+  }
+}
+
+@media (max-width: 700px) {
+  .wrap { padding: 24px 14px 60px; }
+  .kpi-stack { grid-template-columns: repeat(2, 1fr); }
+
+  .rep-table-header, .lb-header { display: none; }
+  .rep-row, .lb-row {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px 16px;
+    padding: 16px;
+    border-radius: 12px;
+    margin: 8px;
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(125, 90, 140, 0.08);
+  }
+  .rep-rank, .rank, .rep-name, .rep-cell { grid-column: 1 / -1; }
+  .team-pill { grid-column: 1 / -1; justify-self: start; }
+  .metric { text-align: left; justify-content: flex-start; }
+  .metric::before {
+    content: attr(data-label);
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: var(--ink-mute);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-right: 4px;
+  }
+  .lb-board { background: transparent; backdrop-filter: none; box-shadow: none; padding: 0; border: none; }
+}
+
+.footer-note {
+  margin-top: 28px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--ink-mute);
+  text-align: center;
+  letter-spacing: 0.06em;
+}
+</style>
+</head>
+<body>
+<div class="grain"></div>
+
+<div class="wrap">
+  <header>
+    <div class="title-block">
+      <div class="eyebrow">April 2026 · Velocity Org Outbound</div>
+      <h1>Outbound <em>Dashboard</em></h1>
+      <p class="subtitle">Three teams. Twenty-seven reps. From dial to dollar.</p>
+    </div>
+    <div class="date-stamp">
+      Snapshot · 7am CST<span class="big" id="dateLabel">April 29, 2026</span>
+    </div>
+  </header>
+
+  <!-- TAB NAV -->
+  <div class="tab-nav">
+    <button class="tab active" data-view="standings">Standings <span class="count">3 teams</span></button>
+    <button class="tab" data-view="leaderboard">Leaderboard <span class="count">27 reps</span></button>
+  </div>
+
+  <!-- STANDINGS VIEW -->
+  <div class="view active" id="view-standings">
+    <div class="section-head">
+      <h2>Team standings</h2>
+      <div class="legend">
+        <span class="legend-item"><span class="crown">👑</span> top team</span>
+        <span class="legend-item"><span class="fire">🔥</span> tied — break it</span>
+        <span class="legend-item"><span style="background:rgba(123,168,154,0.16);color:var(--sage);font-family:'JetBrains Mono',monospace;font-size:9px;padding:2px 5px;border-radius:3px;font-weight:600">↑ N</span> since yesterday</span>
+      </div>
+    </div>
+    <div class="team-grid" id="teamGrid"></div>
+  </div>
+
+  <!-- LEADERBOARD VIEW -->
+  <div class="view" id="view-leaderboard">
+    <div class="section-head">
+      <h2>Org leaderboard</h2>
+      <div class="legend">
+        <span class="legend-item"><span class="crown">👑</span> org leader</span>
+      </div>
+    </div>
+    <div class="lb-controls">
+      <div class="filter-group" id="filterGroup">
+        <button class="chip active" data-team="all">All Teams · 27</button>
+        <button class="chip" data-team="Brett"><span class="dot" style="background:var(--brett)"></span>Brett · 9</button>
+        <button class="chip" data-team="Dylan"><span class="dot" style="background:var(--dylan)"></span>Dylan · 9</button>
+        <button class="chip" data-team="Trevor"><span class="dot" style="background:var(--trevor)"></span>Trevor · 9</button>
+      </div>
+      <div class="sort-control">
+        <label for="sortBy">Sort by</label>
+        <select class="sort-select" id="sortBy">
+          <option value="rv">Recurring Revenue</option>
+          <option value="cw">Closed Won</option>
+          <option value="sql">SQLs</option>
+          <option value="sal">SALs</option>
+          <option value="sit_rate">Sit Rate</option>
+          <option value="cr">Close Rate</option>
+          <option value="avg_deal">Avg Deal Size</option>
+          <option value="dm">DM Connects</option>
+          <option value="calls">Total Calls</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="lb-board">
+      <div class="lb-header">
+        <div>#</div>
+        <div>Rep</div>
+        <div>Team</div>
+        <div class="metric sortable" data-sort="calls" style="justify-content:flex-end">Calls</div>
+        <div class="metric sortable" data-sort="dm" style="justify-content:flex-end">DM</div>
+        <div class="metric sortable" data-sort="sal" style="justify-content:flex-end">SAL</div>
+        <div class="metric sortable" data-sort="sql" style="justify-content:flex-end">SQL</div>
+        <div class="metric sortable" data-sort="cw" style="justify-content:flex-end">CW</div>
+        <div class="metric sortable" data-sort="rv" style="justify-content:flex-end">RV</div>
+        <div class="metric sortable" data-sort="avg_deal" style="justify-content:flex-end">Avg Deal</div>
+        <div class="metric sortable" data-sort="sit_rate" style="justify-content:flex-end">Sit %</div>
+        <div class="metric sortable" data-sort="cr" style="justify-content:flex-end">CR %</div>
+        <div class="metric sortable" data-sort="dm_per_sal" style="justify-content:flex-end">DM:SAL</div>
+      </div>
+      <div id="lbRows"></div>
+    </div>
+  </div>
+
+  <p class="footer-note">Data: Salesforce · Outbound CW + RV (all sources) · Updated daily</p>
+</div>
+
+<script>
+const DATA = {"reps": [{"rep": "Alex Funches", "team": "Brett", "calls": 3298, "dm": 266, "sal": 12, "sql": 1, "cw": 1, "rv": 23482, "avg_deal": 23482, "dm_per_sal": 22.2, "sit_rate": 8.3, "cr": 100.0}, {"rep": "Andrew Kim", "team": "Brett", "calls": 3313, "dm": 249, "sal": 5, "sql": 3, "cw": 4, "rv": 32281, "avg_deal": 8070, "dm_per_sal": 49.8, "sit_rate": 60.0, "cr": 133.3}, {"rep": "Austin Miyanishi", "team": "Brett", "calls": 1098, "dm": 124, "sal": 10, "sql": 0, "cw": 0, "rv": 3012, "avg_deal": 3012, "dm_per_sal": 12.4, "sit_rate": 0.0, "cr": null}, {"rep": "Blake Williams", "team": "Brett", "calls": 3747, "dm": 288, "sal": 9, "sql": 2, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 32.0, "sit_rate": 22.2, "cr": 0.0}, {"rep": "Brooke Jacques", "team": "Brett", "calls": 4136, "dm": 249, "sal": 21, "sql": 6, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 11.9, "sit_rate": 28.6, "cr": 0.0}, {"rep": "Collin Simon", "team": "Brett", "calls": 2994, "dm": 332, "sal": 22, "sql": 7, "cw": 2, "rv": 9883, "avg_deal": 4942, "dm_per_sal": 15.1, "sit_rate": 31.8, "cr": 28.6}, {"rep": "Kenya Dixon", "team": "Brett", "calls": 2809, "dm": 213, "sal": 13, "sql": 4, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 16.4, "sit_rate": 30.8, "cr": 0.0}, {"rep": "Spencer Norton", "team": "Brett", "calls": 3133, "dm": 236, "sal": 15, "sql": 5, "cw": 2, "rv": 32249, "avg_deal": 16125, "dm_per_sal": 15.7, "sit_rate": 33.3, "cr": 40.0}, {"rep": "Tommy Theologis", "team": "Brett", "calls": 2941, "dm": 336, "sal": 26, "sql": 10, "cw": 1, "rv": 11551, "avg_deal": 11551, "dm_per_sal": 12.9, "sit_rate": 38.5, "cr": 10.0}, {"rep": "Adam Esquivel", "team": "Dylan", "calls": 2736, "dm": 298, "sal": 23, "sql": 4, "cw": 1, "rv": 9343, "avg_deal": 9343, "dm_per_sal": 13.0, "sit_rate": 17.4, "cr": 25.0}, {"rep": "Alex Guzman", "team": "Dylan", "calls": 2589, "dm": 302, "sal": 11, "sql": 5, "cw": 2, "rv": 18007, "avg_deal": 6002, "dm_per_sal": 27.5, "sit_rate": 45.5, "cr": 40.0}, {"rep": "Alex Martinez", "team": "Dylan", "calls": 2662, "dm": 319, "sal": 16, "sql": 5, "cw": 1, "rv": 51070, "avg_deal": 51070, "dm_per_sal": 19.9, "sit_rate": 31.2, "cr": 20.0}, {"rep": "Deysi Rosas", "team": "Dylan", "calls": 3944, "dm": 306, "sal": 12, "sql": 6, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 25.5, "sit_rate": 50.0, "cr": 0.0}, {"rep": "Ethan Moody", "team": "Dylan", "calls": 3256, "dm": 318, "sal": 25, "sql": 8, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 12.7, "sit_rate": 32.0, "cr": 0.0}, {"rep": "John Meenan", "team": "Dylan", "calls": 2969, "dm": 374, "sal": 18, "sql": 4, "cw": 1, "rv": 5134, "avg_deal": 5134, "dm_per_sal": 20.8, "sit_rate": 22.2, "cr": 25.0}, {"rep": "John Ogbeide", "team": "Dylan", "calls": 2671, "dm": 351, "sal": 25, "sql": 3, "cw": 1, "rv": 26568, "avg_deal": 26568, "dm_per_sal": 14.0, "sit_rate": 12.0, "cr": 33.3}, {"rep": "Trenton Hines", "team": "Dylan", "calls": 2882, "dm": 230, "sal": 25, "sql": 5, "cw": 2, "rv": 18534, "avg_deal": 9267, "dm_per_sal": 9.2, "sit_rate": 20.0, "cr": 40.0}, {"rep": "Will Baldridge", "team": "Dylan", "calls": 3852, "dm": 290, "sal": 23, "sql": 10, "cw": 2, "rv": 33079, "avg_deal": 16539, "dm_per_sal": 12.6, "sit_rate": 43.5, "cr": 20.0}, {"rep": "Ashley Winterbottom", "team": "Trevor", "calls": 3624, "dm": 402, "sal": 11, "sql": 5, "cw": 0, "rv": 5359, "avg_deal": 2679, "dm_per_sal": 36.5, "sit_rate": 45.5, "cr": 0.0}, {"rep": "Briana Nono", "team": "Trevor", "calls": 2970, "dm": 423, "sal": 17, "sql": 6, "cw": 0, "rv": 3958, "avg_deal": 3958, "dm_per_sal": 24.9, "sit_rate": 35.3, "cr": 0.0}, {"rep": "Eric Rice", "team": "Trevor", "calls": 3187, "dm": 450, "sal": 11, "sql": 0, "cw": 1, "rv": 4554, "avg_deal": 4554, "dm_per_sal": 40.9, "sit_rate": 0.0, "cr": null}, {"rep": "Jace Nansa", "team": "Trevor", "calls": 2492, "dm": 267, "sal": 12, "sql": 0, "cw": 3, "rv": 21164, "avg_deal": 7055, "dm_per_sal": 22.2, "sit_rate": 0.0, "cr": null}, {"rep": "Jackson Woodfin", "team": "Trevor", "calls": 2514, "dm": 342, "sal": 14, "sql": 4, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 24.4, "sit_rate": 28.6, "cr": 0.0}, {"rep": "Jalen Montgomery", "team": "Trevor", "calls": 4883, "dm": 467, "sal": 8, "sql": 1, "cw": 0, "rv": 3199, "avg_deal": 3199, "dm_per_sal": 58.4, "sit_rate": 12.5, "cr": 0.0}, {"rep": "Michael Bernhardt", "team": "Trevor", "calls": 2625, "dm": 351, "sal": 16, "sql": 5, "cw": 1, "rv": 8674, "avg_deal": 4337, "dm_per_sal": 21.9, "sit_rate": 31.2, "cr": 20.0}, {"rep": "Nisheet Shah", "team": "Trevor", "calls": 2162, "dm": 263, "sal": 16, "sql": 3, "cw": 0, "rv": 9119, "avg_deal": 4560, "dm_per_sal": 16.4, "sit_rate": 18.8, "cr": 0.0}, {"rep": "Theo Stephen", "team": "Trevor", "calls": 2943, "dm": 416, "sal": 39, "sql": 5, "cw": 2, "rv": 6346, "avg_deal": 2115, "dm_per_sal": 10.7, "sit_rate": 12.8, "cr": 40.0}], "teams": [{"team": "Brett", "rep_count": 9, "total_calls": 27469, "total_dm": 2293, "total_sal": 133, "total_sql": 38, "total_cw": 10, "total_rv": 112458, "avg_calls": 3052, "avg_dm": 255, "avg_sal": 14.8, "avg_sql": 4.2, "avg_cw": 1.1, "avg_rv": 12495, "team_avg_deal": 10223, "avg_dm_per_sal": 17.2, "team_sit_rate": 28.6, "team_cr": 26.3}, {"team": "Dylan", "rep_count": 9, "total_calls": 27561, "total_dm": 2788, "total_sal": 178, "total_sql": 50, "total_cw": 10, "total_rv": 161735, "avg_calls": 3062, "avg_dm": 310, "avg_sal": 19.8, "avg_sql": 5.6, "avg_cw": 1.1, "avg_rv": 17971, "team_avg_deal": 14703, "avg_dm_per_sal": 15.7, "team_sit_rate": 28.1, "team_cr": 20.0}, {"team": "Trevor", "rep_count": 9, "total_calls": 27400, "total_dm": 3381, "total_sal": 144, "total_sql": 29, "total_cw": 7, "total_rv": 62373, "avg_calls": 3044, "avg_dm": 376, "avg_sal": 16.0, "avg_sql": 3.2, "avg_cw": 0.8, "avg_rv": 6930, "team_avg_deal": 4158, "avg_dm_per_sal": 23.5, "team_sit_rate": 20.1, "team_cr": 24.1}], "rep_deltas": {"Alex Funches": {"calls": 150, "dm": 14, "sal": 1, "dm_per_sal": 0.7}, "Andrew Kim": {"calls": 180, "dm": 15}, "Austin Miyanishi": {"calls": 143, "dm": 15, "sal": 3, "dm_per_sal": 3.2}, "Blake Williams": {"calls": 206, "dm": 25}, "Brooke Jacques": {"calls": 255, "dm": 22, "sal": 1}, "Collin Simon": {"calls": 127, "dm": 16, "sal": 1, "sql": 1, "sit_rate": 3.2}, "Kenya Dixon": {"calls": 88, "dm": 8, "sal": 1, "sql": 1, "sit_rate": 5.8, "dm_per_sal": 0.7}, "Spencer Norton": {"calls": 134, "dm": 21, "sal": 1}, "Tommy Theologis": {"calls": 112, "dm": 14, "sal": 1, "sql": 1, "cw": 1, "rv": 11551, "sit_rate": 2.5, "cr": 10.0}, "Adam Esquivel": {"calls": 139, "dm": 26, "sal": 1, "sql": 1, "sit_rate": 3.8}, "Alex Guzman": {"calls": 94, "dm": 10, "rv": 12048}, "Alex Martinez": {"calls": 108, "dm": 5, "sal": 2, "dm_per_sal": 2.5}, "Deysi Rosas": {"calls": 180, "dm": 25}, "Ethan Moody": {"calls": 129, "dm": 17, "sal": 1}, "John Meenan": {"calls": 122, "dm": 23, "sal": 3, "dm_per_sal": 2.6}, "John Ogbeide": {"calls": 125, "dm": 29, "sal": 2}, "Trenton Hines": {"calls": 156, "dm": 8, "sal": 1}, "Will Baldridge": {"calls": 181, "dm": 7}, "Ashley Winterbottom": {"calls": 111, "dm": 17, "sql": 1, "rv": 2383, "sit_rate": 9.1}, "Briana Nono": {"calls": 169, "dm": 25, "sal": 1}, "Eric Rice": {"calls": 186, "dm": 22, "sal": 2, "dm_per_sal": 6.7}, "Jace Nansa": {"calls": 154, "dm": 14, "sal": 1, "cw": 1, "rv": 11998, "dm_per_sal": 0.8}, "Jackson Woodfin": {"calls": 126, "dm": 19, "sal": 2, "dm_per_sal": 2.5}, "Jalen Montgomery": {"calls": 230, "dm": 27}, "Michael Bernhardt": {"calls": 150, "dm": 24, "sal": 1}, "Nisheet Shah": {"calls": 105, "dm": 19, "sal": 1, "sql": 1, "sit_rate": 5.5}, "Theo Stephen": {"calls": 203, "dm": 26, "sal": 3, "sql": 1, "sit_rate": 1.7, "dm_per_sal": 0.1}}, "team_deltas": {"Brett": {"total_calls": 1395, "total_dm": 150, "total_sal": 9, "total_sql": 3, "total_cw": 1, "total_rv": 11550, "avg_calls": 155, "avg_dm": 17, "avg_sal": 1.0, "avg_sql": 0.3, "avg_cw": 0.1, "team_avg_deal": 132, "team_sit_rate": 0.4, "team_cr": 0.6, "avg_dm_per_sal": 0.1}, "Dylan": {"total_calls": 1234, "total_dm": 150, "total_sal": 10, "total_sql": 1, "total_rv": 12047, "avg_calls": 137, "avg_dm": 17, "avg_sal": 1.1, "avg_sql": 0.2}, "Trevor": {"total_calls": 1434, "total_dm": 193, "total_sal": 11, "total_sql": 3, "total_cw": 1, "total_rv": 14380, "avg_calls": 159, "avg_dm": 22, "avg_sal": 1.2, "avg_sql": 0.3, "avg_cw": 0.1, "team_avg_deal": 466, "team_sit_rate": 0.6, "team_cr": 1.0, "avg_dm_per_sal": 0.5}}, "snapshot_date": "2026-04-29", "compared_to": "2026-04-28"};
+
+function findWinners(items, key, idField, lowerIsBetter = false) {
+  const valid = items.filter(x => x[key] !== null && x[key] !== undefined);
+  if (!valid.length) return {leaders: [], isTie: false};
+  const cmp = lowerIsBetter ? Math.min : Math.max;
+  const best = cmp(...valid.map(x => x[key]));
+  const winners = valid.filter(x => x[key] === best).map(x => x[idField]);
+  return {leaders: winners, isTie: winners.length > 1};
+}
+
+const TEAM_WIN = {
+  avg_calls: findWinners(DATA.teams, 'avg_calls', 'team'),
+  avg_dm: findWinners(DATA.teams, 'avg_dm', 'team'),
+  avg_sal: findWinners(DATA.teams, 'avg_sal', 'team'),
+  avg_sql: findWinners(DATA.teams, 'avg_sql', 'team'),
+  avg_cw: findWinners(DATA.teams, 'avg_cw', 'team'),
+  total_rv: findWinners(DATA.teams, 'total_rv', 'team'),
+  team_avg_deal: findWinners(DATA.teams, 'team_avg_deal', 'team'),
+  team_sit_rate: findWinners(DATA.teams, 'team_sit_rate', 'team'),
+  team_cr: findWinners(DATA.teams, 'team_cr', 'team'),
+  avg_dm_per_sal: findWinners(DATA.teams, 'avg_dm_per_sal', 'team', true),
+};
+
+const REP_WIN = {
+  calls: findWinners(DATA.reps, 'calls', 'rep'),
+  dm: findWinners(DATA.reps, 'dm', 'rep'),
+  sal: findWinners(DATA.reps, 'sal', 'rep'),
+  sql: findWinners(DATA.reps, 'sql', 'rep'),
+  cw: findWinners(DATA.reps, 'cw', 'rep'),
+  rv: findWinners(DATA.reps, 'rv', 'rep'),
+  avg_deal: findWinners(DATA.reps.filter(r => r.cw >= 1), 'avg_deal', 'rep'),
+  sit_rate: findWinners(DATA.reps.filter(r => r.sal >= 5), 'sit_rate', 'rep'),
+  cr: findWinners(DATA.reps.filter(r => r.sql >= 3), 'cr', 'rep'),
+  dm_per_sal: findWinners(DATA.reps.filter(r => r.dm_per_sal !== null && r.sal >= 5), 'dm_per_sal', 'rep', true),
+};
+
+const fmt = n => typeof n === 'number' ? n.toLocaleString('en-US', {maximumFractionDigits: 1}) : n;
+const fmtCurrencyShort = n => {
+  if (!n && n !== 0) return '—';
+  if (n >= 1000) return '$' + (n / 1000).toFixed(1) + 'k';
+  return '$' + n.toLocaleString();
+};
+
+const REP_DELTAS = DATA.rep_deltas || {};
+const TEAM_DELTAS = DATA.team_deltas || {};
+
+// Render delta arrow for a metric — shows nothing if no positive change
+function repDelta(rep, key, opts = {}) {
+  const d = REP_DELTAS[rep];
+  if (!d || !d[key]) return '';
+  const val = d[key];
+  let display = val;
+  if (opts.currency) display = fmtCurrencyShort(val);
+  else if (opts.pct) display = val + 'pt';
+  else if (opts.ratio) display = val.toFixed(1);
+  return `<span class="delta-up">${display}</span>`;
+}
+
+function teamDelta(team, key, opts = {}) {
+  const d = TEAM_DELTAS[team];
+  if (!d || !d[key]) return '';
+  const val = d[key];
+  let display = val;
+  if (opts.currency) display = fmtCurrencyShort(val);
+  else if (opts.pct) display = val.toFixed(1) + 'pt';
+  else if (opts.ratio) display = val.toFixed(1);
+  return `<span class="delta-up">${display}</span>`;
+}
+
+function statusFor(winState, name) {
+  if (!winState.leaders.includes(name)) return '';
+  return winState.isTie ? 'tied' : 'leader';
+}
+
+// === STANDINGS VIEW (team cards w/ inline drill-down) ===
+function renderTeamCards() {
+  const grid = document.getElementById('teamGrid');
+  grid.innerHTML = DATA.teams.map(t => {
+    const cls = t.team.toLowerCase();
+    const stat = key => statusFor(TEAM_WIN[key], t.team);
+    const kpiClass = s => s === 'leader' ? 'is-leader' : s === 'tied' ? 'is-tied' : '';
+    const icon = s => s === 'leader' ? '<span class="kpi-crown">👑</span>' : s === 'tied' ? '<span class="kpi-crown">🔥</span>' : '';
+
+    const sSAL=stat('avg_sal'), sSQL=stat('avg_sql'), sCW=stat('avg_cw'), sRV=stat('total_rv'), sDeal=stat('team_avg_deal');
+    const sSit=stat('team_sit_rate'), sCR=stat('team_cr'), sEff=stat('avg_dm_per_sal'), sDM=stat('avg_dm'), sCalls=stat('avg_calls');
+
+    return `
+      <div class="team-block" id="block-${t.team}">
+        <div class="team-card ${cls}" data-team="${t.team}" onclick="toggleDrill('${t.team}')">
+          <div class="team-tag-row">
+            <div class="team-name"><span class="swatch"></span>${t.team}'s Team</div>
+            <div class="rep-count">${t.rep_count} reps</div>
+          </div>
+          <div class="kpi-stack">
+            <div class="kpi ${kpiClass(sSAL)}"><div class="kpi-label">SALs (avg)${icon(sSAL)}</div><div class="kpi-value">${t.avg_sal}</div><div class="kpi-sub">${t.total_sal} total ${teamDelta(t.team, 'total_sal')}</div></div>
+            <div class="kpi ${kpiClass(sSQL)}"><div class="kpi-label">SQLs (avg)${icon(sSQL)}</div><div class="kpi-value">${t.avg_sql}</div><div class="kpi-sub">${t.total_sql} total ${teamDelta(t.team, 'total_sql')}</div></div>
+            <div class="kpi ${kpiClass(sCW)}"><div class="kpi-label">CW (avg)${icon(sCW)}</div><div class="kpi-value">${t.avg_cw}</div><div class="kpi-sub">${t.total_cw} total ${teamDelta(t.team, 'total_cw')}</div></div>
+            <div class="kpi ${kpiClass(sRV)}"><div class="kpi-label">Recurring Rev${icon(sRV)}</div><div class="kpi-value">${fmtCurrencyShort(t.total_rv)}</div><div class="kpi-sub">avg ${fmtCurrencyShort(t.avg_rv)} / rep ${teamDelta(t.team, 'total_rv', {currency:true})}</div></div>
+            <div class="kpi ${kpiClass(sDeal)}"><div class="kpi-label">Avg Deal${icon(sDeal)}</div><div class="kpi-value">${fmtCurrencyShort(t.team_avg_deal)}</div><div class="kpi-sub">all sources ${teamDelta(t.team, 'team_avg_deal', {currency:true})}</div></div>
+            <div class="kpi ${kpiClass(sSit)}"><div class="kpi-label">Sit Rate${icon(sSit)}</div><div class="kpi-value">${t.team_sit_rate}<span style="font-size:13px;color:var(--ink-mute);font-weight:500">%</span></div><div class="kpi-sub">SQL ÷ SAL ${teamDelta(t.team, 'team_sit_rate', {pct:true})}</div></div>
+            <div class="kpi ${kpiClass(sCR)}"><div class="kpi-label">Close Rate${icon(sCR)}</div><div class="kpi-value">${t.team_cr}<span style="font-size:13px;color:var(--ink-mute);font-weight:500">%</span></div><div class="kpi-sub">CW ÷ SQL ${teamDelta(t.team, 'team_cr', {pct:true})}</div></div>
+            <div class="kpi ${kpiClass(sEff)}"><div class="kpi-label">DM:SAL${icon(sEff)}</div><div class="kpi-value">${t.avg_dm_per_sal}<span style="font-size:13px;color:var(--ink-mute);font-weight:500">:1</span></div><div class="kpi-sub">connects per SAL ${teamDelta(t.team, 'avg_dm_per_sal', {ratio:true})}</div></div>
+            <div class="kpi ${kpiClass(sDM)}"><div class="kpi-label">DM Connects${icon(sDM)}</div><div class="kpi-value">${fmt(t.avg_dm)}</div><div class="kpi-sub">${fmt(t.total_dm)} total ${teamDelta(t.team, 'total_dm')}</div></div>
+            <div class="kpi ${kpiClass(sCalls)}"><div class="kpi-label">Calls (avg)${icon(sCalls)}</div><div class="kpi-value">${fmt(t.avg_calls)}</div><div class="kpi-sub">${fmt(t.total_calls)} total ${teamDelta(t.team, 'total_calls')}</div></div>
+          </div>
+          <div class="expand-hint">
+            <span>see reps</span>
+            <span class="arrow">▼</span>
+          </div>
+        </div>
+        <div class="drilldown ${cls}" id="drill-${t.team}"></div>
+      </div>
+    `;
+  }).join('');
+}
+
+let openTeam = null;
+
+function toggleDrill(team) {
+  // Close currently open if clicking the same one
+  if (openTeam === team) {
+    document.getElementById(`drill-${team}`).classList.remove('is-open');
+    document.querySelector(`[data-team="${team}"]`).classList.remove('is-active');
+    openTeam = null;
+    return;
+  }
+
+  // Close any other open team first
+  if (openTeam) {
+    document.getElementById(`drill-${openTeam}`).classList.remove('is-open');
+    document.querySelector(`[data-team="${openTeam}"]`).classList.remove('is-active');
+  }
+
+  openTeam = team;
+  document.querySelector(`[data-team="${team}"]`).classList.add('is-active');
+
+  const reps = DATA.reps.filter(r => r.team === team).sort((a,b) => b.rv - a.rv || b.cw - a.cw || b.sql - a.sql);
+
+  const repCellClass = (key, repName) => {
+    const s = statusFor(REP_WIN[key], repName);
+    return s === 'leader' ? 'is-rep-leader' : s === 'tied' ? 'is-rep-tied' : '';
+  };
+  const repIcon = (key, repName) => {
+    const s = statusFor(REP_WIN[key], repName);
+    return s === 'leader' ? '<span class="crown-mini">👑</span>' : s === 'tied' ? '<span class="crown-mini">🔥</span>' : '';
+  };
+
+  const drill = document.getElementById(`drill-${team}`);
+  drill.innerHTML = `
+    <div class="rep-table-header">
+      <div>#</div>
+      <div>Rep</div>
+      <div class="metric" style="justify-content:flex-end">Calls</div>
+      <div class="metric" style="justify-content:flex-end">DM</div>
+      <div class="metric" style="justify-content:flex-end">SAL</div>
+      <div class="metric" style="justify-content:flex-end">SQL</div>
+      <div class="metric" style="justify-content:flex-end">CW</div>
+      <div class="metric" style="justify-content:flex-end">RV</div>
+      <div class="metric" style="justify-content:flex-end">Avg Deal</div>
+      <div class="metric" style="justify-content:flex-end">Sit %</div>
+      <div class="metric" style="justify-content:flex-end">CR %</div>
+      <div class="metric" style="justify-content:flex-end">DM:SAL</div>
+    </div>
+    ${reps.map((r, i) => `
+      <div class="rep-row">
+        <div class="rep-rank">${i + 1}</div>
+        <div class="rep-name">${r.rep}</div>
+        <div class="metric ${repCellClass('calls', r.rep)}" data-label="Calls">${repIcon('calls', r.rep)}<span class="value-text">${fmt(r.calls)}</span>${repDelta(r.rep, 'calls')}</div>
+        <div class="metric ${repCellClass('dm', r.rep)}" data-label="DM">${repIcon('dm', r.rep)}<span class="value-text">${fmt(r.dm)}</span>${repDelta(r.rep, 'dm')}</div>
+        <div class="metric ${repCellClass('sal', r.rep)}" data-label="SAL">${repIcon('sal', r.rep)}<span class="value-text">${r.sal}</span>${repDelta(r.rep, 'sal')}</div>
+        <div class="metric ${repCellClass('sql', r.rep)}" data-label="SQL">${repIcon('sql', r.rep)}<span class="value-text">${r.sql}</span>${repDelta(r.rep, 'sql')}</div>
+        <div class="metric ${repCellClass('cw', r.rep)}" data-label="CW">${repIcon('cw', r.rep)}<span class="value-text">${r.cw}</span>${repDelta(r.rep, 'cw')}</div>
+        <div class="metric ${repCellClass('rv', r.rep)}" data-label="RV">${repIcon('rv', r.rep)}<span class="value-text">${fmtCurrencyShort(r.rv)}</span>${repDelta(r.rep, 'rv', {currency:true})}</div>
+        <div class="metric ${r.cw >= 1 ? repCellClass('avg_deal', r.rep) : ''}" data-label="Avg Deal">${r.cw >= 1 ? repIcon('avg_deal', r.rep) : ''}<span class="value-text">${r.avg_deal !== null ? fmtCurrencyShort(r.avg_deal) : '—'}</span></div>
+        <div class="metric ${r.sal >= 5 ? repCellClass('sit_rate', r.rep) : ''}" data-label="Sit %">${r.sal >= 5 ? repIcon('sit_rate', r.rep) : ''}<span class="value-text">${r.sit_rate !== null ? r.sit_rate + '%' : '—'}</span>${repDelta(r.rep, 'sit_rate', {pct:true})}</div>
+        <div class="metric ${r.sql >= 3 && r.cr !== null ? repCellClass('cr', r.rep) : ''}" data-label="CR %">${r.sql >= 3 && r.cr !== null ? repIcon('cr', r.rep) : ''}<span class="value-text">${r.cr !== null ? r.cr + '%' : '—'}</span>${repDelta(r.rep, 'cr', {pct:true})}</div>
+        <div class="metric ${r.sal >= 5 ? repCellClass('dm_per_sal', r.rep) : ''}" data-label="DM:SAL">${r.sal >= 5 ? repIcon('dm_per_sal', r.rep) : ''}<span class="value-text">${r.dm_per_sal !== null ? r.dm_per_sal + ':1' : '—'}</span>${repDelta(r.rep, 'dm_per_sal', {ratio:true})}</div>
+      </div>
+    `).join('')}
+  `;
+  drill.classList.add('is-open');
+}
+
+// === LEADERBOARD VIEW ===
+let activeTeamFilter = 'all';
+let lbSortKey = 'rv';
+
+function getFiltered() {
+  return activeTeamFilter === 'all' ? [...DATA.reps] : DATA.reps.filter(r => r.team === activeTeamFilter);
+}
+
+function getSorted(arr) {
+  return [...arr].sort((a, b) => {
+    const av = a[lbSortKey], bv = b[lbSortKey];
+    // Lower-is-better for dm_per_sal
+    if (lbSortKey === 'dm_per_sal') {
+      if (av === null && bv === null) return 0;
+      if (av === null) return 1;
+      if (bv === null) return -1;
+      return av - bv;
+    }
+    const aval = (av === null || av === undefined) ? -Infinity : av;
+    const bval = (bv === null || bv === undefined) ? -Infinity : bv;
+    if (bval !== aval) return bval - aval;
+    return b.rv - a.rv || b.cw - a.cw || b.sql - a.sql;
+  });
+}
+
+function renderLeaderboard() {
+  const sorted = getSorted(getFiltered());
+  const repCellClass = (key, repName) => {
+    const s = statusFor(REP_WIN[key], repName);
+    return s === 'leader' ? 'is-rep-leader' : s === 'tied' ? 'is-rep-tied' : '';
+  };
+  const repIcon = (key, repName) => {
+    const s = statusFor(REP_WIN[key], repName);
+    return s === 'leader' ? '<span class="crown-mini">👑</span>' : s === 'tied' ? '<span class="crown-mini">🔥</span>' : '';
+  };
+
+  document.getElementById('lbRows').innerHTML = sorted.map((r, i) => {
+    const rank = i + 1;
+    const rankClass = rank <= 3 ? `top-${rank}` : '';
+    const teamLower = r.team.toLowerCase();
+    const isDB = r.team === 'Dylan';
+
+    return `
+      <div class="lb-row ${isDB ? 'is-db' : ''}">
+        <div class="rank ${rankClass}">${rank}</div>
+        <div class="rep-cell">
+          <div class="team-tag ${teamLower}"></div>
+          <div class="rep-name-stack">
+            <span>${r.rep}</span>
+            <span class="mgr">${r.team}'s team</span>
+          </div>
+        </div>
+        <div><span class="team-pill ${teamLower}">${r.team.slice(0,4)}</span></div>
+        <div class="metric ${repCellClass('calls', r.rep)} ${lbSortKey==='calls'?'bold':''}" data-label="Calls">${repIcon('calls', r.rep)}<span class="value-text">${fmt(r.calls)}</span>${repDelta(r.rep, 'calls')}</div>
+        <div class="metric ${repCellClass('dm', r.rep)} ${lbSortKey==='dm'?'bold':''}" data-label="DM">${repIcon('dm', r.rep)}<span class="value-text">${fmt(r.dm)}</span>${repDelta(r.rep, 'dm')}</div>
+        <div class="metric ${repCellClass('sal', r.rep)} ${lbSortKey==='sal'?'bold':''}" data-label="SAL">${repIcon('sal', r.rep)}<span class="value-text">${r.sal}</span>${repDelta(r.rep, 'sal')}</div>
+        <div class="metric ${repCellClass('sql', r.rep)} ${lbSortKey==='sql'?'bold':''}" data-label="SQL">${repIcon('sql', r.rep)}<span class="value-text">${r.sql}</span>${repDelta(r.rep, 'sql')}</div>
+        <div class="metric ${repCellClass('cw', r.rep)} ${lbSortKey==='cw'?'bold':''}" data-label="CW">${repIcon('cw', r.rep)}<span class="value-text">${r.cw}</span>${repDelta(r.rep, 'cw')}</div>
+        <div class="metric ${repCellClass('rv', r.rep)} ${lbSortKey==='rv'?'bold':''}" data-label="RV">${repIcon('rv', r.rep)}<span class="value-text">${fmtCurrencyShort(r.rv)}</span>${repDelta(r.rep, 'rv', {currency:true})}</div>
+        <div class="metric ${r.cw >= 1 ? repCellClass('avg_deal', r.rep) : ''} ${lbSortKey==='avg_deal'?'bold':''}" data-label="Avg Deal">${r.cw >= 1 ? repIcon('avg_deal', r.rep) : ''}<span class="value-text">${r.avg_deal !== null ? fmtCurrencyShort(r.avg_deal) : '—'}</span></div>
+        <div class="metric ${r.sal >= 5 ? repCellClass('sit_rate', r.rep) : ''} ${lbSortKey==='sit_rate'?'bold':''}" data-label="Sit %">${r.sal >= 5 ? repIcon('sit_rate', r.rep) : ''}<span class="value-text">${r.sit_rate !== null ? r.sit_rate + '%' : '—'}</span>${repDelta(r.rep, 'sit_rate', {pct:true})}</div>
+        <div class="metric ${r.sql >= 3 && r.cr !== null ? repCellClass('cr', r.rep) : ''} ${lbSortKey==='cr'?'bold':''}" data-label="CR %">${r.sql >= 3 && r.cr !== null ? repIcon('cr', r.rep) : ''}<span class="value-text">${r.cr !== null ? r.cr + '%' : '—'}</span>${repDelta(r.rep, 'cr', {pct:true})}</div>
+        <div class="metric ${r.sal >= 5 ? repCellClass('dm_per_sal', r.rep) : ''} ${lbSortKey==='dm_per_sal'?'bold':''}" data-label="DM:SAL">${r.sal >= 5 ? repIcon('dm_per_sal', r.rep) : ''}<span class="value-text">${r.dm_per_sal !== null ? r.dm_per_sal + ':1' : '—'}</span>${repDelta(r.rep, 'dm_per_sal', {ratio:true})}</div>
+      </div>
+    `;
+  }).join('');
+
+  document.querySelectorAll('.lb-header .sortable').forEach(el => {
+    el.classList.toggle('active', el.dataset.sort === lbSortKey);
+  });
+}
+
+// Tab switching
+document.querySelectorAll('.tab').forEach(t => {
+  t.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
+    document.querySelectorAll('.view').forEach(x => x.classList.remove('active'));
+    t.classList.add('active');
+    document.getElementById('view-' + t.dataset.view).classList.add('active');
+  });
+});
+
+// Filter chips
+document.getElementById('filterGroup').addEventListener('click', e => {
+  const chip = e.target.closest('.chip');
+  if (!chip) return;
+  document.querySelectorAll('#filterGroup .chip').forEach(c => c.classList.remove('active'));
+  chip.classList.add('active');
+  activeTeamFilter = chip.dataset.team;
+  renderLeaderboard();
+});
+
+// Sort dropdown
+document.getElementById('sortBy').addEventListener('change', e => {
+  lbSortKey = e.target.value;
+  renderLeaderboard();
+});
+
+// Sortable column headers
+document.querySelectorAll('.lb-header .sortable').forEach(el => {
+  el.addEventListener('click', () => {
+    lbSortKey = el.dataset.sort;
+    document.getElementById('sortBy').value = lbSortKey;
+    renderLeaderboard();
+  });
+});
+
+// Date label
+const today = new Date();
+const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+document.getElementById('dateLabel').textContent = `${months[today.getMonth()]} ${today.getDate()}, ${today.getFullYear()}`;
+
+renderTeamCards();
+renderLeaderboard();
+</script>
+</body>
+</html>
