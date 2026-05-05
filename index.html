@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Outbound Dashboard — April 2026</title>
+<title>Outbound Dashboard — May 2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -25,21 +25,20 @@
   --paper: #FFFAF5;
 
   --sage: #7BA89A;
+  --sage-soft: #C8DDD4;
+  --sage-bg: rgba(123, 168, 154, 0.16);
   --gold: #D4A85C;
   --gold-soft: #F0DBA8;
+  --gold-bg: rgba(244, 224, 176, 0.4);
   --rust: #D17B5C;
+  --rust-bg: rgba(209, 123, 92, 0.16);
 
   --brett: #F5A89C;
   --brett-deep: #A04E3D;
-  --brett-tint: rgba(245, 168, 156, 0.15);
-
   --dylan: #C99BC4;
   --dylan-deep: #6E3F75;
-  --dylan-tint: rgba(201, 155, 196, 0.18);
-
   --trevor: #9AAEDB;
   --trevor-deep: #3D4D85;
-  --trevor-tint: rgba(154, 174, 219, 0.18);
 
   --shadow-soft: 0 4px 20px rgba(125, 90, 140, 0.08);
   --shadow-card: 0 8px 32px rgba(125, 90, 140, 0.12);
@@ -81,7 +80,7 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  margin-bottom: 28px;
+  margin-bottom: 20px;
   flex-wrap: wrap;
   gap: 24px;
 }
@@ -123,7 +122,7 @@ h1 em {
   margin-top: 10px;
   font-size: 15px;
   color: var(--ink-soft);
-  max-width: 520px;
+  max-width: 560px;
   line-height: 1.5;
 }
 
@@ -151,11 +150,68 @@ h1 em {
   text-transform: none;
 }
 
+.day-progress {
+  margin-top: 6px;
+  font-size: 11px;
+  color: var(--ink-mute);
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+/* STANDARDS BAR */
+.standards-bar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: rgba(45, 36, 56, 0.92);
+  color: rgba(255, 255, 255, 0.95);
+  padding: 14px 22px;
+  border-radius: 14px;
+  margin-bottom: 28px;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  flex-wrap: wrap;
+}
+
+.standards-bar .label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.6);
+  margin-right: 4px;
+}
+
+.standards-bar .std {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 500;
+}
+.standards-bar .std .num {
+  font-weight: 700;
+  color: var(--peach);
+  font-variant-numeric: tabular-nums;
+}
+.standards-bar .divider {
+  width: 1px;
+  height: 18px;
+  background: rgba(255,255,255,0.18);
+}
+.standards-bar .standard-or {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  padding: 0 4px;
+}
+
 /* TABS */
 .tab-nav {
   display: flex;
   gap: 6px;
-  margin-bottom: 28px;
+  margin-bottom: 24px;
   background: rgba(255, 250, 245, 0.5);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -197,9 +253,7 @@ h1 em {
   opacity: 0.7;
 }
 
-.view {
-  display: none;
-}
+.view { display: none; }
 .view.active {
   display: block;
   animation: fadeIn 0.3s ease;
@@ -213,7 +267,7 @@ h1 em {
 /* SECTION HEADING */
 .section-head {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
   margin-bottom: 18px;
   gap: 16px;
@@ -227,90 +281,298 @@ h1 em {
   letter-spacing: -0.015em;
 }
 
-.legend {
+/* CARRY TOGGLE */
+.carry-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 7px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(125, 90, 140, 0.2);
+  background: rgba(255, 250, 245, 0.6);
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: all 0.18s ease;
+  backdrop-filter: blur(8px);
+}
+.carry-toggle:hover {
+  background: rgba(255, 250, 245, 0.85);
+  transform: translateY(-1px);
+}
+.carry-toggle.active {
+  background: var(--ink);
+  color: var(--cream);
+  border-color: var(--ink);
+}
+.carry-toggle .pill {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 2px 7px;
+  border-radius: 999px;
+  letter-spacing: 0.04em;
+}
+.carry-toggle:not(.active) .pill {
+  background: rgba(125, 90, 140, 0.12);
+  color: var(--mauve);
+}
+
+/* TEAM GRID — head-to-head layout */
+.team-grid {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 18px;
+  align-items: start;
+  margin-bottom: 28px;
+}
+
+.vs-divider {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 0 0;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 32px;
+  color: var(--rust);
+  letter-spacing: -0.02em;
+  font-style: italic;
+  position: sticky;
+  top: 20px;
+}
+.vs-divider::before {
+  content: '';
+  width: 1px;
+  height: 60px;
+  background: linear-gradient(to bottom, transparent, var(--ink-mute), transparent);
+  margin-bottom: 14px;
+  opacity: 0.4;
+}
+.vs-divider::after {
+  content: '';
+  width: 1px;
+  height: 60px;
+  background: linear-gradient(to bottom, var(--ink-mute), transparent);
+  margin-top: 14px;
+  opacity: 0.4;
+}
+
+.team-block {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Other OB section — below the head-to-head, smaller compact card */
+.tbd-section {
+  margin-top: 20px;
+  background: rgba(255, 250, 245, 0.45);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(125, 90, 140, 0.15);
+  border-radius: 18px;
+  padding: 22px 24px;
+  cursor: pointer;
+  transition: all 0.22s ease;
+}
+.tbd-section:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-soft);
+}
+.tbd-section.is-active {
+  border-radius: 18px 18px 0 0;
+  border-bottom-color: rgba(255,255,255,0.4);
+}
+
+.tbd-header {
   display: flex;
   align-items: center;
-  gap: 14px;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.tbd-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  letter-spacing: -0.015em;
+}
+
+.tbd-title::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--ink-mute);
+  opacity: 0.5;
+}
+
+.tbd-meta {
   font-family: 'JetBrains Mono', monospace;
   font-size: 10px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--ink-mute);
 }
-.legend-item { display: flex; align-items: center; gap: 6px; }
-.legend-item .crown {
-  display: inline-flex;
-  width: 18px;
-  height: 18px;
-  align-items: center;
-  justify-content: center;
-  background: var(--gold-soft);
-  border-radius: 50%;
-  color: var(--gold);
-  font-size: 11px;
-}
-.legend-item .fire {
-  display: inline-flex;
-  width: 18px;
-  height: 18px;
-  align-items: center;
-  justify-content: center;
-  background: rgba(154,174,219,0.4);
-  border-radius: 50%;
-  color: #3D4D85;
-  font-size: 11px;
+
+/* Compact KPI strip for the Other OB card */
+.other-kpi-strip {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  margin-bottom: 14px;
 }
 
-/* TEAM GRID — vertical stack with inline drill-down */
-.team-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
+.other-kpi {
+  background: rgba(255, 255, 255, 0.45);
+  border: 1px solid rgba(125, 90, 140, 0.06);
+  border-radius: 10px;
+  padding: 10px 12px;
 }
 
-.team-block {
+.other-kpi-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-bottom: 4px;
+}
+
+.other-kpi-value {
+  font-family: 'Inter', sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.other-kpi-sub {
+  font-size: 10px;
+  color: var(--ink-mute);
+  margin-top: 2px;
+}
+
+.other-rep-count {
   display: flex;
-  flex-direction: column;
-  gap: 0;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.other-rep-pill {
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(125, 90, 140, 0.1);
+  border-radius: 8px;
+  padding: 6px 11px;
+  font-size: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.other-rep-pill .mgr-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  color: var(--ink-mute);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.other-rep-pill .carry-mini {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  color: var(--mauve);
+  background: rgba(201, 155, 196, 0.14);
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+
+.tbd-expand-hint {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 12px;
+  border-top: 1px dashed rgba(125, 90, 140, 0.15);
+}
+
+.tbd-expand-hint .arrow {
+  transition: transform 0.25s ease;
+  display: inline-block;
+}
+
+.tbd-section.is-active .tbd-expand-hint .arrow {
+  transform: rotate(180deg);
+}
+
+/* Drilldown for Other OB */
+.other-drilldown {
+  background: rgba(255, 250, 245, 0.55);
+  backdrop-filter: blur(16px);
+  border-left: 1px solid rgba(125, 90, 140, 0.15);
+  border-right: 1px solid rgba(125, 90, 140, 0.15);
+  border-bottom: 1px solid rgba(125, 90, 140, 0.15);
+  border-radius: 0 0 18px 18px;
+  overflow: hidden;
+  display: none;
+  animation: slideDown 0.3s ease;
+}
+.other-drilldown.is-open { display: block; }
+
+/* New hire badge */
+.new-hire-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, rgba(244, 224, 176, 0.5) 0%, rgba(244, 224, 176, 0.25) 100%);
+  border: 1px solid var(--gold);
+  color: #8B6F2A;
+  padding: 2px 7px;
+  border-radius: 5px;
+  margin-left: 8px;
 }
 
 .team-card {
   background: rgba(255, 250, 245, 0.6);
   backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
   border: 1px solid rgba(255, 255, 255, 0.6);
   border-radius: 20px;
   padding: 24px;
   cursor: pointer;
   transition: all 0.22s ease;
   box-shadow: var(--shadow-soft);
-  position: relative;
-  overflow: hidden;
 }
 
-.team-card.brett { color: var(--brett); }
-.team-card.dylan { color: var(--dylan); }
-.team-card.trevor { color: var(--trevor); }
+.team-card.brett.is-active { border-color: var(--brett); border-bottom-color: rgba(255,255,255,0.4); border-radius: 20px 20px 0 0; }
+.team-card.dylan.is-active { border-color: var(--dylan); border-bottom-color: rgba(255,255,255,0.4); border-radius: 20px 20px 0 0; }
+.team-card.trevor.is-active { border-color: var(--trevor); border-bottom-color: rgba(255,255,255,0.4); border-radius: 20px 20px 0 0; }
 
 .team-card:hover {
   transform: translateY(-2px);
   box-shadow: var(--shadow-hover);
 }
 
-.team-card.is-active {
-  border-radius: 20px 20px 0 0;
-  box-shadow: var(--shadow-card);
-  transform: translateY(0);
-}
-.team-card.brett.is-active { border-color: var(--brett); border-bottom-color: rgba(255,255,255,0.4); }
-.team-card.dylan.is-active { border-color: var(--dylan); border-bottom-color: rgba(255,255,255,0.4); }
-.team-card.trevor.is-active { border-color: var(--trevor); border-bottom-color: rgba(255,255,255,0.4); }
-
 .team-tag-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 16px;
+  margin-bottom: 18px;
 }
 
 .team-name {
@@ -340,87 +602,236 @@ h1 em {
   color: var(--ink-mute);
 }
 
-.kpi-stack {
+/* PACE TILES — primary visual for May day-zero */
+.pace-grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 10px;
+  gap: 12px;
   margin-bottom: 14px;
 }
 
-.kpi {
+.pace-grid-outcomes {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.pace-grid-activity {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+/* Section dividers — outcomes vs activity */
+.section-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 14px 0 10px;
+}
+.section-divider::before,
+.section-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(125, 90, 140, 0.18) 50%, transparent 100%);
+}
+.section-divider .divider-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  font-weight: 600;
+}
+.section-divider.activity-divider .divider-label {
+  color: rgba(122, 107, 137, 0.7);
+}
+
+/* Activity tiles get muted treatment — supporting role, not headline */
+.pace-grid-activity .pace-tile {
+  background: rgba(255, 255, 255, 0.35);
+  padding: 10px 14px 12px;
+}
+.pace-grid-activity .pace-value {
+  font-size: 19px;
+}
+
+.pace-tile {
   position: relative;
-  padding: 10px 11px;
-  border-radius: 11px;
-  background: rgba(255, 255, 255, 0.45);
-  border: 1px solid rgba(125, 90, 140, 0.06);
+  padding: 14px 16px 16px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(125, 90, 140, 0.08);
   transition: all 0.2s ease;
 }
 
-.kpi.is-leader {
-  background: linear-gradient(135deg, var(--gold-soft) 0%, rgba(244, 224, 176, 0.4) 100%);
-  border: 1px solid var(--gold);
-  box-shadow: 0 4px 14px rgba(212, 168, 92, 0.18);
-}
-
-.kpi.is-tied {
-  background: linear-gradient(135deg, rgba(154, 174, 219, 0.35) 0%, rgba(184, 200, 230, 0.2) 100%);
-  border: 1px solid #6B83C4;
-  box-shadow: 0 4px 14px rgba(107, 131, 196, 0.22);
-  position: relative;
-}
-.kpi.is-tied::after {
-  content: 'BREAK IT';
-  position: absolute;
-  top: 6px;
-  right: 8px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 7px;
-  letter-spacing: 0.12em;
-  color: #3D4D85;
-  font-weight: 600;
-  background: rgba(255, 255, 255, 0.7);
-  padding: 2px 5px;
-  border-radius: 3px;
-}
-
-.kpi-label {
+.pace-label {
   font-family: 'JetBrains Mono', monospace;
   font-size: 9px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--ink-mute);
-  margin-bottom: 4px;
+  margin-bottom: 6px;
   display: flex;
   align-items: center;
-  gap: 6px;
+  justify-content: space-between;
 }
 
-.kpi.is-leader .kpi-label { color: #8B6F2A; }
-.kpi.is-tied .kpi-label { color: #3D4D85; }
+.pace-target {
+  font-size: 10px;
+  color: var(--ink-mute);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  font-family: 'Inter', sans-serif;
+  text-transform: none;
+}
 
-.kpi-crown {
-  display: inline-flex;
-  width: 14px;
-  height: 14px;
-  align-items: center;
-  justify-content: center;
-  font-size: 11px;
+.pace-value-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.pace-value {
+  font-family: 'Inter', sans-serif;
+  font-size: 26px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
   line-height: 1;
 }
 
-.kpi-value {
+.pace-value-currency { font-size: 22px; }
+
+.pace-needed {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--ink-mute);
+  letter-spacing: 0.04em;
+}
+
+.pace-bar {
+  height: 6px;
+  background: rgba(125, 90, 140, 0.08);
+  border-radius: 999px;
+  overflow: hidden;
+  position: relative;
+}
+
+.pace-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.4s ease, background 0.3s ease;
+  background: var(--sage);
+}
+
+.pace-fill.green { background: linear-gradient(90deg, var(--sage) 0%, var(--sage-soft) 100%); }
+.pace-fill.yellow { background: linear-gradient(90deg, var(--gold) 0%, #E5C684 100%); }
+.pace-fill.red { background: linear-gradient(90deg, var(--rust) 0%, #E89A7E 100%); }
+.pace-fill.zero { background: rgba(125, 90, 140, 0.18); }
+
+.pace-tile.is-on-pace { border-color: rgba(123, 168, 154, 0.35); }
+.pace-tile.is-warning { border-color: rgba(212, 168, 92, 0.35); }
+.pace-tile.is-behind { border-color: rgba(209, 123, 92, 0.35); }
+
+/* RV tile is special — bigger, full-width */
+.rv-banner {
+  background: linear-gradient(135deg, rgba(245, 168, 156, 0.18) 0%, rgba(201, 155, 196, 0.18) 50%, rgba(154, 174, 219, 0.18) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 14px;
+  padding: 16px 22px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.rv-banner .rv-stack {
+  display: flex;
+  flex-direction: column;
+}
+
+.rv-banner .rv-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-bottom: 4px;
+}
+
+.rv-banner .rv-value {
   font-family: 'Inter', sans-serif;
-  font-size: 19px;
-  font-weight: 600;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
   color: var(--ink);
-  letter-spacing: -0.02em;
   font-variant-numeric: tabular-nums;
 }
 
-.kpi-sub {
+.rv-banner .rv-meta {
   font-size: 11px;
   color: var(--ink-mute);
   margin-top: 2px;
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.04em;
+}
+
+.rv-banner .rv-april {
+  text-align: right;
+  font-size: 11px;
+  color: var(--ink-mute);
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.06em;
+}
+.rv-banner .rv-april .num {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  display: block;
+  letter-spacing: -0.015em;
+}
+
+/* CARRY ROW — only visible when toggle is on */
+.carry-row {
+  display: none;
+  background: rgba(201, 155, 196, 0.12);
+  border: 1px dashed rgba(201, 155, 196, 0.4);
+  border-radius: 12px;
+  padding: 12px 16px;
+  margin-bottom: 14px;
+  font-size: 13px;
+  color: var(--ink-soft);
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.show-carry .carry-row { display: flex; }
+
+.carry-row .label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mauve);
+  font-weight: 600;
+}
+
+.carry-row .num {
+  font-family: 'Inter', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+  margin: 0 6px;
+}
+
+.carry-row .carry-help {
+  font-size: 11px;
+  color: var(--ink-mute);
+  font-style: italic;
 }
 
 .expand-hint {
@@ -445,11 +856,10 @@ h1 em {
   transform: rotate(180deg);
 }
 
-/* INLINE DRILL-DOWN — sits directly below its team card */
+/* DRILL-DOWN */
 .drilldown {
   background: rgba(255, 250, 245, 0.55);
   backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
   border-left: 1px solid rgba(255, 255, 255, 0.6);
   border-right: 1px solid rgba(255, 255, 255, 0.6);
   border-bottom: 1px solid rgba(255, 255, 255, 0.6);
@@ -459,9 +869,9 @@ h1 em {
   display: none;
   animation: slideDown 0.3s ease;
 }
-.drilldown.brett { border-color: var(--brett); border-top: none; }
-.drilldown.dylan { border-color: var(--dylan); border-top: none; }
-.drilldown.trevor { border-color: var(--trevor); border-top: none; }
+.drilldown.brett.is-open { border-color: var(--brett); border-top: none; }
+.drilldown.dylan.is-open { border-color: var(--dylan); border-top: none; }
+.drilldown.trevor.is-open { border-color: var(--trevor); border-top: none; }
 
 .drilldown.is-open { display: block; }
 
@@ -473,16 +883,21 @@ h1 em {
 .rep-table-header,
 .rep-row {
   display: grid;
-  grid-template-columns: 28px minmax(140px, 1.3fr) repeat(10, 1fr);
+  grid-template-columns: 28px minmax(140px, 1.3fr) repeat(8, 1fr);
   align-items: center;
   gap: 6px;
   padding: 12px 18px;
   font-size: 12.5px;
 }
 
+/* with carry shown, add 1 column */
+.show-carry .rep-table-header,
+.show-carry .rep-row {
+  grid-template-columns: 28px minmax(140px, 1.3fr) 64px repeat(8, 1fr);
+}
+
 .rep-table-header {
   background: rgba(45, 36, 56, 0.92);
-  color: rgba(255, 255, 255, 0.95);
   font-family: 'JetBrains Mono', monospace;
   font-size: 10px;
   letter-spacing: 0.14em;
@@ -490,8 +905,10 @@ h1 em {
   font-weight: 500;
 }
 
-.rep-table-header .metric { color: rgba(255, 255, 255, 0.95) !important; }
-.rep-table-header div { color: rgba(255, 255, 255, 0.95) !important; }
+.rep-table-header div,
+.rep-table-header .metric {
+  color: rgba(255, 255, 255, 0.95) !important;
+}
 
 .rep-row {
   border-bottom: 1px solid rgba(125, 90, 140, 0.06);
@@ -528,16 +945,95 @@ h1 em {
 }
 
 .metric .value-text { font-weight: 500; }
-.metric.is-rep-leader .value-text { color: var(--gold); font-weight: 700; }
-.metric.is-rep-leader { background: linear-gradient(90deg, transparent 0%, rgba(244, 224, 176, 0.28) 100%); padding: 4px 8px; border-radius: 8px; margin: -4px 0; }
 
-.metric.is-rep-tied .value-text { color: #3D4D85; font-weight: 700; }
-.metric.is-rep-tied { background: linear-gradient(90deg, transparent 0%, rgba(154, 174, 219, 0.28) 100%); padding: 4px 8px; border-radius: 8px; margin: -4px 0; }
+/* Pace dot for rep-level metrics */
+.pace-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(125, 90, 140, 0.15);
+  flex-shrink: 0;
+}
+.pace-dot.green { background: var(--sage); }
+.pace-dot.yellow { background: var(--gold); }
+.pace-dot.red { background: var(--rust); }
 
-.metric .crown-mini {
+/* Carry cell highlight */
+.carry-cell {
+  font-family: 'JetBrains Mono', monospace;
   font-size: 11px;
-  line-height: 1;
+  font-weight: 600;
+  color: var(--mauve);
+  background: rgba(201, 155, 196, 0.14);
+  padding: 3px 8px;
+  border-radius: 5px;
+  letter-spacing: 0.02em;
   display: inline-block;
+}
+.carry-cell.high {
+  background: rgba(201, 155, 196, 0.28);
+  color: var(--dylan-deep);
+}
+
+/* Daily progress strip — tiny banner showing where we are in May */
+.month-strip {
+  background: rgba(255, 250, 245, 0.5);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+
+.month-strip .progress-bar {
+  flex: 1;
+  height: 6px;
+  background: rgba(125, 90, 140, 0.1);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.month-strip .progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--rose) 0%, var(--mauve) 50%, var(--lavender) 100%);
+  border-radius: 999px;
+  transition: width 0.6s ease;
+}
+
+.month-strip .day-text {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+  color: var(--ink-mute);
+}
+.month-strip .day-text strong {
+  color: var(--ink);
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+}
+
+.legend-zero {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+.legend-zero .item { display: flex; align-items: center; gap: 6px; }
+.legend-zero .dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
 }
 
 /* Daily movement deltas (green up-arrows for positive change) */
@@ -553,28 +1049,13 @@ h1 em {
   display: inline-flex;
   align-items: center;
   gap: 2px;
-  margin-left: 4px;
+  margin-left: 6px;
   white-space: nowrap;
+  vertical-align: middle;
 }
 .delta-up::before {
   content: '↑';
   font-size: 10px;
-}
-
-.kpi .delta-up {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  font-size: 9px;
-  padding: 2px 5px;
-}
-.kpi.is-leader .delta-up,
-.kpi.is-tied .delta-up {
-  /* When kpi card already has a corner badge, push delta to under the value */
-  position: static;
-  margin-left: 0;
-  margin-top: 4px;
-  display: inline-flex;
 }
 
 /* LEADERBOARD VIEW */
@@ -627,7 +1108,6 @@ h1 em {
   color: var(--cream);
   border-color: var(--ink);
 }
-
 .chip.active .dot { background: var(--cream) !important; }
 
 .sort-control {
@@ -641,8 +1121,7 @@ h1 em {
 .sort-select {
   font-family: 'Inter', sans-serif;
   font-size: 13px;
-  padding: 8px 14px 8px 14px;
-  padding-right: 36px;
+  padding: 8px 36px 8px 14px;
   border-radius: 999px;
   border: 1px solid rgba(125, 90, 140, 0.18);
   background: rgba(255, 250, 245, 0.55);
@@ -659,7 +1138,6 @@ h1 em {
 .lb-board {
   background: rgba(255, 250, 245, 0.5);
   backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.6);
   border-radius: 22px;
   overflow: hidden;
@@ -669,7 +1147,7 @@ h1 em {
 .lb-header,
 .lb-row {
   display: grid;
-  grid-template-columns: 44px minmax(150px, 1.6fr) 70px repeat(10, 1fr);
+  grid-template-columns: 44px minmax(150px, 1.6fr) 70px repeat(6, 1fr);
   align-items: center;
   gap: 6px;
   padding: 12px 18px;
@@ -678,7 +1156,6 @@ h1 em {
 
 .lb-header {
   background: rgba(45, 36, 56, 0.92);
-  color: rgba(255, 255, 255, 0.95);
   font-family: 'JetBrains Mono', monospace;
   font-size: 10px;
   letter-spacing: 0.14em;
@@ -686,11 +1163,9 @@ h1 em {
   font-weight: 500;
 }
 
-/* Force ALL header text/metric cells to bright white, override any inherited classes */
+.lb-header div,
 .lb-header .metric,
-.lb-header .metric.bold,
-.lb-header .metric.high,
-.lb-header div {
+.lb-header .metric.bold {
   color: rgba(255, 255, 255, 0.95) !important;
 }
 
@@ -752,7 +1227,7 @@ h1 em {
 }
 .team-tag.brett { background: var(--brett); }
 .team-tag.dylan { background: var(--dylan); }
-.team-tag.trevor { background: var(--trevor); }
+.team-tag.other { background: var(--ink-mute); }
 
 .rep-name-stack {
   display: flex;
@@ -779,31 +1254,38 @@ h1 em {
 }
 .team-pill.brett { background: rgba(245, 168, 156, 0.25); color: #A04E3D; }
 .team-pill.dylan { background: rgba(201, 155, 196, 0.28); color: #6E3F75; }
-.team-pill.trevor { background: rgba(154, 174, 219, 0.3); color: #3D4D85; }
+.team-pill.other { background: rgba(125, 110, 140, 0.18); color: var(--ink-soft); }
 
-.metric.bold { color: var(--ink); font-weight: 500; }
-.metric.high { color: var(--sage); font-weight: 600; }
+.metric.bold { color: var(--ink); font-weight: 600; }
 
 /* MOBILE */
 @media (max-width: 1100px) {
-  .kpi-stack { grid-template-columns: repeat(3, 1fr); }
-}
-
-@media (max-width: 800px) {
-  .lb-row, .lb-header,
-  .rep-row, .rep-table-header {
-    font-size: 11.5px;
-    padding: 10px 14px;
-    gap: 4px;
+  .team-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
   }
+  .vs-divider {
+    flex-direction: row;
+    padding: 0;
+    font-size: 24px;
+  }
+  .vs-divider::before, .vs-divider::after {
+    width: 60px;
+    height: 1px;
+    margin: 0 14px;
+  }
+  .pace-grid-outcomes { grid-template-columns: repeat(3, 1fr); }
+  .pace-grid-activity { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 700px) {
   .wrap { padding: 24px 14px 60px; }
-  .kpi-stack { grid-template-columns: repeat(2, 1fr); }
+  .pace-grid-outcomes { grid-template-columns: 1fr; }
+  .pace-grid-activity { grid-template-columns: 1fr 1fr; }
+  .standards-bar { font-size: 12px; padding: 12px 16px; }
 
-  .rep-table-header, .lb-header { display: none; }
-  .rep-row, .lb-row {
+  .rep-table-header { display: none; }
+  .rep-row {
     grid-template-columns: 1fr 1fr;
     gap: 8px 16px;
     padding: 16px;
@@ -812,8 +1294,7 @@ h1 em {
     background: rgba(255, 255, 255, 0.5);
     border: 1px solid rgba(125, 90, 140, 0.08);
   }
-  .rep-rank, .rank, .rep-name, .rep-cell { grid-column: 1 / -1; }
-  .team-pill { grid-column: 1 / -1; justify-self: start; }
+  .rep-rank, .rep-name { grid-column: 1 / -1; }
   .metric { text-align: left; justify-content: flex-start; }
   .metric::before {
     content: attr(data-label);
@@ -825,7 +1306,6 @@ h1 em {
     text-transform: uppercase;
     margin-right: 4px;
   }
-  .lb-board { background: transparent; backdrop-filter: none; box-shadow: none; padding: 0; border: none; }
 }
 
 .footer-note {
@@ -836,6 +1316,13 @@ h1 em {
   text-align: center;
   letter-spacing: 0.06em;
 }
+
+.footer-note a {
+  color: var(--ink-soft);
+  text-decoration: underline;
+  text-decoration-color: rgba(125, 90, 140, 0.25);
+}
+.footer-note a:hover { color: var(--rust); }
 </style>
 </head>
 <body>
@@ -844,59 +1331,83 @@ h1 em {
 <div class="wrap">
   <header>
     <div class="title-block">
-      <div class="eyebrow">April 2026 · Velocity Org Outbound</div>
+      <div class="eyebrow">May 2026 · Velocity Org Outbound</div>
       <h1>Outbound <em>Dashboard</em></h1>
-      <p class="subtitle">Three teams. Twenty-seven reps. From dial to dollar.</p>
+      <p class="subtitle">Brett vs Dylan. Two teams. One month. Let's go.</p>
     </div>
     <div class="date-stamp">
-      April Final<span class="big" id="dateLabel">April 30, 2026</span>
+      Day 5<span class="big" id="dateLabel">May 5, 2026</span>
+      <div class="day-progress" id="dayProgress">Day 0 of 22 · 0% through</div>
     </div>
   </header>
 
+  <!-- STANDARDS BAR — sets expectations -->
+  <div class="standards-bar">
+    <span class="label">Standards</span>
+    <span class="std"><span class="num">125</span> calls/day</span>
+    <span class="divider"></span>
+    <span class="std"><span class="num">20</span> DM connects/day</span>
+    <span class="divider"></span>
+    <span class="std"><span class="num">10</span> SALs/week</span>
+    <span class="divider"></span>
+    <span class="std"><span class="num">5</span> SQLs/week</span>
+    <span class="divider"></span>
+    <span class="std"><span class="num">4</span> CWs/month</span>
+    <span class="standard-or">·</span>
+    <span class="std" style="color:rgba(255,255,255,0.8)">hit 2 of 3 daily</span>
+  </div>
+
+  <!-- MONTH PROGRESS STRIP -->
+  <div class="month-strip">
+    <span class="day-text"><strong>May 1</strong></span>
+    <div class="progress-bar"><div class="progress-fill" id="monthProgressFill" style="width: 0%"></div></div>
+    <span class="day-text">May 31</span>
+  </div>
+
   <!-- TAB NAV -->
   <div class="tab-nav">
-    <button class="tab active" data-view="standings">Standings <span class="count">3 teams</span></button>
-    <button class="tab" data-view="leaderboard">Leaderboard <span class="count">27 reps</span></button>
+    <button class="tab active" data-view="standings">Standings <span class="count">2 teams</span></button>
+    <button class="tab" data-view="leaderboard">Leaderboard <span class="count">22 reps</span></button>
+    <button class="tab" data-view="april">April Final <span class="count">archive</span></button>
   </div>
 
   <!-- STANDINGS VIEW -->
   <div class="view active" id="view-standings">
     <div class="section-head">
-      <h2>Team standings</h2>
-      <div class="legend">
-        <span class="legend-item"><span class="crown">👑</span> top team</span>
-        <span class="legend-item"><span class="fire">🔥</span> tied — break it</span>
-        <span class="legend-item"><span style="background:rgba(123,168,154,0.16);color:var(--sage);font-family:'JetBrains Mono',monospace;font-size:9px;padding:2px 5px;border-radius:3px;font-weight:600">↑ N</span> since yesterday</span>
+      <h2>Head-to-head</h2>
+      <div style="display:flex;align-items:center;gap:10px">
+        <button class="carry-toggle" id="carryToggle" onclick="toggleCarry()">
+          Show April Carry <span class="pill" id="carryPillTotal">334</span>
+        </button>
       </div>
     </div>
     <div class="team-grid" id="teamGrid"></div>
+    <div id="tbdSection"></div>
   </div>
 
-  <!-- LEADERBOARD VIEW -->
+  <!-- LEADERBOARD -->
   <div class="view" id="view-leaderboard">
     <div class="section-head">
       <h2>Org leaderboard</h2>
-      <div class="legend">
-        <span class="legend-item"><span class="crown">👑</span> org leader</span>
+      <div class="legend-zero">
+        <span class="item">Day 2 of 22 · ranked by SQLs (lead conversion)</span>
       </div>
     </div>
+
     <div class="lb-controls">
       <div class="filter-group" id="filterGroup">
-        <button class="chip active" data-team="all">All Teams · 27</button>
-        <button class="chip" data-team="Brett"><span class="dot" style="background:var(--brett)"></span>Brett · 9</button>
-        <button class="chip" data-team="Dylan"><span class="dot" style="background:var(--dylan)"></span>Dylan · 9</button>
-        <button class="chip" data-team="Trevor"><span class="dot" style="background:var(--trevor)"></span>Trevor · 9</button>
+        <button class="chip active" data-team="all">All Teams · 26</button>
+        <button class="chip" data-team="Brett"><span class="dot" style="background:var(--brett)"></span>Brett · 10</button>
+        <button class="chip" data-team="Dylan"><span class="dot" style="background:var(--dylan)"></span>Dylan · 11</button>
+        <button class="chip" data-team="Other"><span class="dot" style="background:var(--ink-mute)"></span>Other · 5</button>
       </div>
       <div class="sort-control">
         <label for="sortBy">Sort by</label>
         <select class="sort-select" id="sortBy">
-          <option value="rv">Recurring Revenue</option>
-          <option value="cw">Closed Won</option>
           <option value="sql">SQLs</option>
+          <option value="cw">Closed Won</option>
           <option value="sal">SALs</option>
-          <option value="sit_rate">Sit Rate</option>
-          <option value="cr">Close Rate</option>
-          <option value="avg_deal">Avg Deal Size</option>
+          <option value="rv">Recurring Revenue</option>
           <option value="dm">DM Connects</option>
           <option value="calls">Total Calls</option>
         </select>
@@ -914,125 +1425,204 @@ h1 em {
         <div class="metric sortable" data-sort="sql" style="justify-content:flex-end">SQL</div>
         <div class="metric sortable" data-sort="cw" style="justify-content:flex-end">CW</div>
         <div class="metric sortable" data-sort="rv" style="justify-content:flex-end">RV</div>
-        <div class="metric sortable" data-sort="avg_deal" style="justify-content:flex-end">Avg Deal</div>
-        <div class="metric sortable" data-sort="sit_rate" style="justify-content:flex-end">Sit %</div>
-        <div class="metric sortable" data-sort="cr" style="justify-content:flex-end">CR %</div>
-        <div class="metric sortable" data-sort="dm_per_sal" style="justify-content:flex-end">DM:SAL</div>
       </div>
       <div id="lbRows"></div>
     </div>
   </div>
 
-  <p class="footer-note">Data: Salesforce · Outbound CW + RV (all sources) · Updated daily</p>
+  <!-- APRIL ARCHIVE VIEW -->
+  <div class="view" id="view-april">
+    <div class="section-head">
+      <h2>April final standings</h2>
+      <p style="font-size:13px;color:var(--ink-mute);font-style:italic">Locked. Historical reference.</p>
+    </div>
+    <div style="background:rgba(255,250,245,0.5);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.6);border-radius:22px;padding:32px;color:var(--ink-soft);line-height:1.7">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:20px;color:var(--ink-mute)">April 2026 Recap</div>
+
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:24px">
+        <div style="background:rgba(245,168,156,0.12);border-radius:14px;padding:18px;border:1px solid rgba(245,168,156,0.3)">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--brett-deep);margin-bottom:8px;font-weight:600">Brett's Team</div>
+          <div style="font-family:'Inter',sans-serif;font-size:24px;font-weight:600;color:var(--ink)">$189k</div>
+          <div style="font-size:12px;color:var(--ink-mute);margin-top:4px">16 CWs · 41% close rate · 105 carry</div>
+        </div>
+        <div style="background:rgba(201,155,196,0.14);border-radius:14px;padding:18px;border:1px solid rgba(201,155,196,0.3)">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--dylan-deep);margin-bottom:8px;font-weight:600">Dylan's Team</div>
+          <div style="font-family:'Inter',sans-serif;font-size:24px;font-weight:600;color:var(--ink)">$162k</div>
+          <div style="font-size:12px;color:var(--ink-mute);margin-top:4px">10 CWs · 189 SALs (org #1) · <strong style="color:var(--dylan-deep)">156 carry</strong></div>
+        </div>
+        <div style="background:rgba(154,174,219,0.16);border-radius:14px;padding:18px;border:1px solid rgba(154,174,219,0.3)">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--trevor-deep);margin-bottom:8px;font-weight:600">Trevor's Team</div>
+          <div style="font-family:'Inter',sans-serif;font-size:24px;font-weight:600;color:var(--ink)">$76k</div>
+          <div style="font-size:12px;color:var(--ink-mute);margin-top:4px">10 CWs · 354 DM/rep (org #1) · 129 carry</div>
+        </div>
+      </div>
+
+      <p style="font-size:14px;color:var(--ink-soft)">
+        <strong style="color:var(--ink)">Org total: $427k RV · 36 OB CWs · 479 SALs</strong> across 27 reps in three teams. Brett's team took the CW + RV crowns with a final-day blitz. Dylan's team led pipeline build with 189 SALs. Org restructured for May — Trevor's team dissolved, reps reassigned to Brett or Dylan.
+      </p>
+
+      <p style="font-size:13px;margin-top:18px;color:var(--ink-mute);font-style:italic">
+        Full April dashboard archived at <a href="https://dbfieldpulse.github.io/ob-standings/" target="_blank" style="color:var(--rust);text-decoration:none;font-weight:500;border-bottom:1px solid rgba(209,123,92,0.3)">dbfieldpulse.github.io/ob-standings</a>
+      </p>
+    </div>
+  </div>
+
+  <p class="footer-note">May 2026 · Outbound Org · Updated daily · Red thresholds activate May 8</p>
 </div>
 
 <script>
-const DATA = {"reps": [{"rep": "Alex Funches", "team": "Brett", "calls": 3324, "dm": 270, "sal": 12, "sql": 2, "cw": 2, "rv": 39473, "avg_deal": 19737, "dm_per_sal": 22.5, "sit_rate": 16.7, "cr": 100.0}, {"rep": "Andrew Kim", "team": "Brett", "calls": 3459, "dm": 270, "sal": 5, "sql": 3, "cw": 4, "rv": 32281, "avg_deal": 8070, "dm_per_sal": 54.0, "sit_rate": 60.0, "cr": 133.3}, {"rep": "Austin Miyanishi", "team": "Brett", "calls": 1235, "dm": 138, "sal": 11, "sql": 0, "cw": 0, "rv": 3012, "avg_deal": 3012, "dm_per_sal": 12.5, "sit_rate": 0.0, "cr": null}, {"rep": "Blake Williams", "team": "Brett", "calls": 3857, "dm": 298, "sal": 9, "sql": 2, "cw": 1, "rv": 3262, "avg_deal": 3262, "dm_per_sal": 33.1, "sit_rate": 22.2, "cr": 50.0}, {"rep": "Brooke Jacques", "team": "Brett", "calls": 4310, "dm": 256, "sal": 23, "sql": 6, "cw": 1, "rv": 12450, "avg_deal": 12450, "dm_per_sal": 11.1, "sit_rate": 26.1, "cr": 16.7}, {"rep": "Collin Simon", "team": "Brett", "calls": 3105, "dm": 342, "sal": 25, "sql": 7, "cw": 2, "rv": 9883, "avg_deal": 4942, "dm_per_sal": 13.7, "sit_rate": 28.0, "cr": 28.6}, {"rep": "Kenya Dixon", "team": "Brett", "calls": 2974, "dm": 223, "sal": 13, "sql": 4, "cw": 1, "rv": 5776, "avg_deal": 5776, "dm_per_sal": 17.2, "sit_rate": 30.8, "cr": 25.0}, {"rep": "Spencer Norton", "team": "Brett", "calls": 3151, "dm": 241, "sal": 15, "sql": 5, "cw": 2, "rv": 32249, "avg_deal": 16125, "dm_per_sal": 16.1, "sit_rate": 33.3, "cr": 40.0}, {"rep": "Tommy Theologis", "team": "Brett", "calls": 2998, "dm": 345, "sal": 26, "sql": 10, "cw": 3, "rv": 50908, "avg_deal": 16969, "dm_per_sal": 13.3, "sit_rate": 38.5, "cr": 30.0}, {"rep": "Adam Esquivel", "team": "Dylan", "calls": 2869, "dm": 309, "sal": 26, "sql": 4, "cw": 1, "rv": 9343, "avg_deal": 9343, "dm_per_sal": 11.9, "sit_rate": 15.4, "cr": 25.0}, {"rep": "Alex Guzman", "team": "Dylan", "calls": 2746, "dm": 326, "sal": 13, "sql": 5, "cw": 2, "rv": 18007, "avg_deal": 6002, "dm_per_sal": 25.1, "sit_rate": 38.5, "cr": 40.0}, {"rep": "Alex Martinez", "team": "Dylan", "calls": 2857, "dm": 344, "sal": 13, "sql": 5, "cw": 1, "rv": 51070, "avg_deal": 51070, "dm_per_sal": 26.5, "sit_rate": 38.5, "cr": 20.0}, {"rep": "Deysi Rosas", "team": "Dylan", "calls": 4144, "dm": 323, "sal": 12, "sql": 6, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 26.9, "sit_rate": 50.0, "cr": 0.0}, {"rep": "Ethan Moody", "team": "Dylan", "calls": 3345, "dm": 328, "sal": 26, "sql": 9, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 12.6, "sit_rate": 34.6, "cr": 0.0}, {"rep": "John Meenan", "team": "Dylan", "calls": 3166, "dm": 390, "sal": 21, "sql": 4, "cw": 1, "rv": 5134, "avg_deal": 5134, "dm_per_sal": 18.6, "sit_rate": 19.0, "cr": 25.0}, {"rep": "John Ogbeide", "team": "Dylan", "calls": 2823, "dm": 367, "sal": 26, "sql": 4, "cw": 1, "rv": 26568, "avg_deal": 26568, "dm_per_sal": 14.1, "sit_rate": 15.4, "cr": 25.0}, {"rep": "Trenton Hines", "team": "Dylan", "calls": 3031, "dm": 240, "sal": 27, "sql": 5, "cw": 2, "rv": 18534, "avg_deal": 9267, "dm_per_sal": 8.9, "sit_rate": 18.5, "cr": 40.0}, {"rep": "Will Baldridge", "team": "Dylan", "calls": 4126, "dm": 311, "sal": 25, "sql": 10, "cw": 2, "rv": 33079, "avg_deal": 16539, "dm_per_sal": 12.4, "sit_rate": 40.0, "cr": 20.0}, {"rep": "Ashley Winterbottom", "team": "Trevor", "calls": 3931, "dm": 431, "sal": 11, "sql": 5, "cw": 0, "rv": 5359, "avg_deal": 2679, "dm_per_sal": 39.2, "sit_rate": 45.5, "cr": 0.0}, {"rep": "Briana Nono", "team": "Trevor", "calls": 3202, "dm": 442, "sal": 19, "sql": 6, "cw": 0, "rv": 3958, "avg_deal": 3958, "dm_per_sal": 23.3, "sit_rate": 31.6, "cr": 0.0}, {"rep": "Eric Rice", "team": "Trevor", "calls": 3399, "dm": 484, "sal": 12, "sql": 0, "cw": 2, "rv": 6771, "avg_deal": 3386, "dm_per_sal": 40.3, "sit_rate": 0.0, "cr": null}, {"rep": "Jace Nansa", "team": "Trevor", "calls": 2607, "dm": 282, "sal": 12, "sql": 0, "cw": 3, "rv": 21164, "avg_deal": 7055, "dm_per_sal": 23.5, "sit_rate": 0.0, "cr": null}, {"rep": "Jackson Woodfin", "team": "Trevor", "calls": 2630, "dm": 351, "sal": 15, "sql": 4, "cw": 1, "rv": 8524, "avg_deal": 8524, "dm_per_sal": 23.4, "sit_rate": 26.7, "cr": 25.0}, {"rep": "Jalen Montgomery", "team": "Trevor", "calls": 5100, "dm": 491, "sal": 9, "sql": 1, "cw": 0, "rv": 3199, "avg_deal": 3199, "dm_per_sal": 54.6, "sit_rate": 11.1, "cr": 0.0}, {"rep": "Michael Bernhardt", "team": "Trevor", "calls": 2780, "dm": 369, "sal": 16, "sql": 5, "cw": 1, "rv": 8674, "avg_deal": 4337, "dm_per_sal": 23.1, "sit_rate": 31.2, "cr": 20.0}, {"rep": "Nisheet Shah", "team": "Trevor", "calls": 2270, "dm": 274, "sal": 17, "sql": 3, "cw": 1, "rv": 11939, "avg_deal": 3980, "dm_per_sal": 16.1, "sit_rate": 17.6, "cr": 33.3}, {"rep": "Theo Stephen", "team": "Trevor", "calls": 3245, "dm": 439, "sal": 40, "sql": 6, "cw": 2, "rv": 6346, "avg_deal": 2115, "dm_per_sal": 11.0, "sit_rate": 15.0, "cr": 33.3}], "teams": [{"team": "Brett", "rep_count": 9, "total_calls": 28413, "total_dm": 2383, "total_sal": 139, "total_sql": 39, "total_cw": 16, "total_rv": 189295, "avg_calls": 3157, "avg_dm": 265, "avg_sal": 15.4, "avg_sql": 4.3, "avg_cw": 1.8, "avg_rv": 21033, "team_avg_deal": 11135, "avg_dm_per_sal": 17.1, "team_sit_rate": 28.1, "team_cr": 41.0}, {"team": "Dylan", "rep_count": 9, "total_calls": 29107, "total_dm": 2938, "total_sal": 189, "total_sql": 52, "total_cw": 10, "total_rv": 161735, "avg_calls": 3234, "avg_dm": 326, "avg_sal": 21.0, "avg_sql": 5.8, "avg_cw": 1.1, "avg_rv": 17971, "team_avg_deal": 14703, "avg_dm_per_sal": 15.5, "team_sit_rate": 27.5, "team_cr": 19.2}, {"team": "Trevor", "rep_count": 9, "total_calls": 29164, "total_dm": 3563, "total_sal": 151, "total_sql": 30, "total_cw": 10, "total_rv": 75934, "avg_calls": 3240, "avg_dm": 396, "avg_sal": 16.8, "avg_sql": 3.3, "avg_cw": 1.1, "avg_rv": 8437, "team_avg_deal": 4219, "avg_dm_per_sal": 23.6, "team_sit_rate": 19.9, "team_cr": 33.3}], "rep_deltas": {"Alex Funches": {"calls": 26, "dm": 4, "sql": 1, "cw": 1, "rv": 15991, "sit_rate": 8.4}, "Andrew Kim": {"calls": 146, "dm": 21}, "Austin Miyanishi": {"calls": 137, "dm": 14, "sal": 1}, "Blake Williams": {"calls": 110, "dm": 10, "cw": 1, "rv": 3262, "cr": 50.0}, "Brooke Jacques": {"calls": 174, "dm": 7, "sal": 2, "cw": 1, "rv": 12450, "cr": 16.7, "dm_per_sal": 0.8}, "Collin Simon": {"calls": 111, "dm": 10, "sal": 3, "dm_per_sal": 1.4}, "Kenya Dixon": {"calls": 165, "dm": 10, "cw": 1, "rv": 5776, "cr": 25.0}, "Spencer Norton": {"calls": 18, "dm": 5}, "Tommy Theologis": {"calls": 57, "dm": 9, "cw": 2, "rv": 39357, "cr": 20.0}, "Adam Esquivel": {"calls": 133, "dm": 11, "sal": 3, "dm_per_sal": 1.1}, "Alex Guzman": {"calls": 157, "dm": 24, "sal": 2, "dm_per_sal": 2.4}, "Alex Martinez": {"calls": 195, "dm": 25, "sit_rate": 7.3}, "Deysi Rosas": {"calls": 200, "dm": 17}, "Ethan Moody": {"calls": 89, "dm": 10, "sal": 1, "sql": 1, "sit_rate": 2.6, "dm_per_sal": 0.1}, "John Meenan": {"calls": 197, "dm": 16, "sal": 3, "dm_per_sal": 2.2}, "John Ogbeide": {"calls": 152, "dm": 16, "sal": 1, "sql": 1, "sit_rate": 3.4}, "Trenton Hines": {"calls": 149, "dm": 10, "sal": 2, "dm_per_sal": 0.3}, "Will Baldridge": {"calls": 274, "dm": 21, "sal": 2, "dm_per_sal": 0.2}, "Ashley Winterbottom": {"calls": 307, "dm": 29}, "Briana Nono": {"calls": 232, "dm": 19, "sal": 2, "dm_per_sal": 1.6}, "Eric Rice": {"calls": 212, "dm": 34, "sal": 1, "cw": 1, "rv": 2217, "dm_per_sal": 0.6}, "Jace Nansa": {"calls": 115, "dm": 15}, "Jackson Woodfin": {"calls": 116, "dm": 9, "sal": 1, "cw": 1, "rv": 8524, "cr": 25.0, "dm_per_sal": 1.0}, "Jalen Montgomery": {"calls": 217, "dm": 24, "sal": 1, "dm_per_sal": 3.8}, "Michael Bernhardt": {"calls": 155, "dm": 18}, "Nisheet Shah": {"calls": 108, "dm": 11, "sal": 1, "cw": 1, "rv": 2820, "cr": 33.3, "dm_per_sal": 0.3}, "Theo Stephen": {"calls": 302, "dm": 23, "sal": 1, "sql": 1, "sit_rate": 2.2}}, "team_deltas": {"Brett": {"total_calls": 944, "total_dm": 90, "total_sal": 6, "total_sql": 1, "total_cw": 6, "total_rv": 76837, "avg_calls": 105, "avg_dm": 10, "avg_sal": 0.6, "avg_sql": 0.1, "avg_cw": 0.7, "team_avg_deal": 912, "team_cr": 14.7, "avg_dm_per_sal": 0.1}, "Dylan": {"total_calls": 1546, "total_dm": 150, "total_sal": 11, "total_sql": 2, "avg_calls": 172, "avg_dm": 16, "avg_sal": 1.2, "avg_sql": 0.2, "avg_dm_per_sal": 0.2}, "Trevor": {"total_calls": 1764, "total_dm": 182, "total_sal": 7, "total_sql": 1, "total_cw": 3, "total_rv": 13561, "avg_calls": 196, "avg_dm": 20, "avg_sal": 0.8, "avg_sql": 0.1, "avg_cw": 0.3, "team_avg_deal": 61, "team_cr": 9.2}}, "snapshot_date": "2026-04-30", "compared_to": "2026-04-29"};
+const DATA = {"reps": [{"rep": "Alex Funches", "team": "Brett", "calls": 554, "dm": 30, "sal": 0, "sql": 0, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": null, "sit_rate": null, "cr": null, "april_carry": 10, "april_calls": 3324, "april_dm": 270, "april_sal": 12, "april_sql": 2, "april_cw": 2, "april_rv": 39473, "is_new_hire": false}, {"rep": "Andrew Kim", "team": "Brett", "calls": 414, "dm": 61, "sal": 3, "sql": 0, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 20.3, "sit_rate": 0.0, "cr": null, "april_carry": 3, "april_calls": 3459, "april_dm": 270, "april_sal": 5, "april_sql": 3, "april_cw": 4, "april_rv": 32281, "is_new_hire": false}, {"rep": "Austin Miyanishi", "team": "Brett", "calls": 420, "dm": 48, "sal": 1, "sql": 1, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 48.0, "sit_rate": 100.0, "cr": 0.0, "april_carry": 11, "april_calls": 1235, "april_dm": 138, "april_sal": 11, "april_sql": 0, "april_cw": 0, "april_rv": 3012, "is_new_hire": false}, {"rep": "Brooke Jacques", "team": "Brett", "calls": 710, "dm": 53, "sal": 3, "sql": 2, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 17.7, "sit_rate": 66.7, "cr": 0.0, "april_carry": 18, "april_calls": 4310, "april_dm": 256, "april_sal": 23, "april_sql": 6, "april_cw": 1, "april_rv": 12450, "is_new_hire": false}, {"rep": "Collin Simon", "team": "Brett", "calls": 503, "dm": 48, "sal": 3, "sql": 1, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 16.0, "sit_rate": 33.3, "cr": 0.0, "april_carry": 18, "april_calls": 3105, "april_dm": 342, "april_sal": 25, "april_sql": 7, "april_cw": 2, "april_rv": 9883, "is_new_hire": false}, {"rep": "Spencer Norton", "team": "Brett", "calls": 492, "dm": 45, "sal": 2, "sql": 0, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 22.5, "sit_rate": 0.0, "cr": null, "april_carry": 11, "april_calls": 3151, "april_dm": 241, "april_sal": 15, "april_sql": 5, "april_cw": 2, "april_rv": 32249, "is_new_hire": false}, {"rep": "Tommy Theologis", "team": "Brett", "calls": 232, "dm": 22, "sal": 3, "sql": 0, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 7.3, "sit_rate": 0.0, "cr": null, "april_carry": 17, "april_calls": 2998, "april_dm": 345, "april_sal": 26, "april_sql": 10, "april_cw": 3, "april_rv": 50908, "is_new_hire": false}, {"rep": "Theo Stephen", "team": "Brett", "calls": 380, "dm": 39, "sal": 2, "sql": 1, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 19.5, "sit_rate": 50.0, "cr": 0.0, "april_carry": 35, "april_calls": 3245, "april_dm": 439, "april_sal": 40, "april_sql": 6, "april_cw": 2, "april_rv": 6346, "is_new_hire": false}, {"rep": "Ashley Winterbottom", "team": "Brett", "calls": 456, "dm": 38, "sal": 2, "sql": 1, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 19.0, "sit_rate": 50.0, "cr": 0.0, "april_carry": 6, "april_calls": 3931, "april_dm": 431, "april_sal": 11, "april_sql": 5, "april_cw": 0, "april_rv": 5359, "is_new_hire": false}, {"rep": "Andrew Haskell", "team": "Brett", "calls": 651, "dm": 55, "sal": 4, "sql": 1, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 13.8, "sit_rate": 25.0, "cr": 0.0, "april_carry": 0, "april_calls": null, "april_dm": null, "april_sal": null, "april_sql": null, "april_cw": null, "april_rv": null, "is_new_hire": true}, {"rep": "Adam Esquivel", "team": "Dylan", "calls": 599, "dm": 33, "sal": 1, "sql": 1, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 33.0, "sit_rate": 100.0, "cr": 0.0, "april_carry": 24, "april_calls": 2869, "april_dm": 309, "april_sal": 26, "april_sql": 4, "april_cw": 1, "april_rv": 9343, "is_new_hire": false}, {"rep": "Alex Guzman", "team": "Dylan", "calls": 442, "dm": 56, "sal": 1, "sql": 0, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 56.0, "sit_rate": 0.0, "cr": null, "april_carry": 10, "april_calls": 2746, "april_dm": 326, "april_sal": 13, "april_sql": 5, "april_cw": 2, "april_rv": 18007, "is_new_hire": false}, {"rep": "Briana Nono", "team": "Dylan", "calls": 505, "dm": 54, "sal": 3, "sql": 0, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 18.0, "sit_rate": 0.0, "cr": null, "april_carry": 14, "april_calls": 3202, "april_dm": 442, "april_sal": 19, "april_sql": 6, "april_cw": 0, "april_rv": 3958, "is_new_hire": false}, {"rep": "Eric Rice", "team": "Dylan", "calls": 509, "dm": 63, "sal": 0, "sql": 1, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": null, "sit_rate": null, "cr": 0.0, "april_carry": 12, "april_calls": 3399, "april_dm": 484, "april_sal": 12, "april_sql": 0, "april_cw": 2, "april_rv": 6771, "is_new_hire": false}, {"rep": "Ethan Moody", "team": "Dylan", "calls": 319, "dm": 43, "sal": 2, "sql": 1, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 21.5, "sit_rate": 50.0, "cr": 0.0, "april_carry": 17, "april_calls": 3345, "april_dm": 328, "april_sal": 26, "april_sql": 9, "april_cw": 0, "april_rv": 0, "is_new_hire": false}, {"rep": "John Meenan", "team": "Dylan", "calls": 430, "dm": 57, "sal": 3, "sql": 1, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 19.0, "sit_rate": 33.3, "cr": 0.0, "april_carry": 18, "april_calls": 3166, "april_dm": 390, "april_sal": 21, "april_sql": 4, "april_cw": 1, "april_rv": 5134, "is_new_hire": false}, {"rep": "John Ogbeide", "team": "Dylan", "calls": 479, "dm": 50, "sal": 3, "sql": 2, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 16.7, "sit_rate": 66.7, "cr": 0.0, "april_carry": 23, "april_calls": 2823, "april_dm": 367, "april_sal": 26, "april_sql": 4, "april_cw": 1, "april_rv": 26568, "is_new_hire": false}, {"rep": "Trenton Hines", "team": "Dylan", "calls": 312, "dm": 49, "sal": 2, "sql": 0, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 24.5, "sit_rate": 0.0, "cr": null, "april_carry": 25, "april_calls": 3031, "april_dm": 240, "april_sal": 27, "april_sql": 5, "april_cw": 2, "april_rv": 18534, "is_new_hire": false}, {"rep": "Will Baldridge", "team": "Dylan", "calls": 436, "dm": 24, "sal": 2, "sql": 1, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 12.0, "sit_rate": 50.0, "cr": 0.0, "april_carry": 20, "april_calls": 4126, "april_dm": 311, "april_sal": 25, "april_sql": 10, "april_cw": 2, "april_rv": 33079, "is_new_hire": false}, {"rep": "Jackson Woodfin", "team": "Dylan", "calls": 279, "dm": 30, "sal": 1, "sql": 1, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 30.0, "sit_rate": 100.0, "cr": 0.0, "april_carry": 13, "april_calls": 2630, "april_dm": 351, "april_sal": 15, "april_sql": 4, "april_cw": 1, "april_rv": 8524, "is_new_hire": false}, {"rep": "Josh Rieth", "team": "Dylan", "calls": 697, "dm": 49, "sal": 1, "sql": 1, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 49.0, "sit_rate": 100.0, "cr": 0.0, "april_carry": 0, "april_calls": null, "april_dm": null, "april_sal": null, "april_sql": null, "april_cw": null, "april_rv": null, "is_new_hire": true}, {"rep": "Trevor Schliefer", "team": "Other", "calls": 0, "dm": 0, "sal": 0, "sql": 0, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": null, "sit_rate": null, "cr": null, "april_carry": 0, "april_calls": null, "april_dm": null, "april_sal": null, "april_sql": null, "april_cw": null, "april_rv": null, "is_new_hire": true}, {"rep": "Jonathan Munday", "team": "Other", "calls": 219, "dm": 35, "sal": 3, "sql": 1, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 11.7, "sit_rate": 33.3, "cr": 0.0, "april_carry": 0, "april_calls": null, "april_dm": null, "april_sal": null, "april_sql": null, "april_cw": null, "april_rv": null, "is_new_hire": true}, {"rep": "Nisheet Shah", "team": "Other", "calls": 493, "dm": 46, "sal": 3, "sql": 0, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 15.3, "sit_rate": 0.0, "cr": null, "april_carry": 16, "april_calls": 2270, "april_dm": 274, "april_sal": 17, "april_sql": 3, "april_cw": 1, "april_rv": 11939, "is_new_hire": false}, {"rep": "Michael Bernhardt", "team": "Other", "calls": 444, "dm": 51, "sal": 3, "sql": 0, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 17.0, "sit_rate": 0.0, "cr": null, "april_carry": 13, "april_calls": 2780, "april_dm": 369, "april_sal": 16, "april_sql": 5, "april_cw": 1, "april_rv": 8674, "is_new_hire": false}, {"rep": "Bray Pettegrew", "team": "Other", "calls": 364, "dm": 43, "sal": 3, "sql": 2, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 14.3, "sit_rate": 66.7, "cr": 0.0, "april_carry": 0, "april_calls": null, "april_dm": null, "april_sal": null, "april_sql": null, "april_cw": null, "april_rv": null, "is_new_hire": true}], "teams": [{"team": "Brett", "rep_count": 10, "total_calls": 4812, "total_dm": 439, "total_sal": 23, "total_sql": 7, "total_cw": 0, "total_rv": 0, "team_carry": 129, "april_total_rv": 191961, "april_total_cw": 16, "april_total_sal": 168}, {"team": "Dylan", "rep_count": 11, "total_calls": 5007, "total_dm": 508, "total_sal": 19, "total_sql": 9, "total_cw": 0, "total_rv": 0, "team_carry": 176, "april_total_rv": 129918, "april_total_cw": 12, "april_total_sal": 210}, {"team": "Other", "rep_count": 5, "total_calls": 1520, "total_dm": 175, "total_sal": 12, "total_sql": 3, "total_cw": 0, "total_rv": 0, "team_carry": 29, "april_total_rv": 20613, "april_total_cw": 2, "april_total_sal": 33}], "snapshot_date": "2026-05-05", "compared_to": "2026-05-04", "standards": {"calls_per_day": 125, "dm_per_day": 20, "sal_per_week": 10, "sql_per_week": 5, "cw_per_month": 4}, "days_elapsed": 3, "working_days_in_month": 22, "rep_deltas": {"Alex Funches": {"calls": 180, "dm": 15}, "Andrew Kim": {"calls": 113, "dm": 16}, "Austin Miyanishi": {"calls": 90, "dm": 12, "sql": 1}, "Brooke Jacques": {"calls": 220, "dm": 9, "sql": 1}, "Collin Simon": {"calls": 127, "dm": 17, "sal": 1}, "Spencer Norton": {"calls": 86, "dm": 5}, "Theo Stephen": {"calls": 133, "dm": 19, "sal": 1}, "Ashley Winterbottom": {"calls": 100, "dm": 17, "sal": 1, "sql": 1}, "Andrew Haskell": {"calls": 158, "dm": 15, "sal": 3}, "Adam Esquivel": {"calls": 198, "dm": 10}, "Alex Guzman": {"calls": 131, "dm": 20}, "Briana Nono": {"calls": 124, "dm": 16}, "Eric Rice": {"calls": 93, "dm": 16, "sql": 1}, "Ethan Moody": {"calls": 79, "dm": 9, "sal": 1}, "John Meenan": {"calls": 141, "dm": 18}, "John Ogbeide": {"calls": 171, "dm": 15}, "Trenton Hines": {"calls": 122, "dm": 22}, "Will Baldridge": {"calls": 172, "dm": 13, "sal": 1}, "Jackson Woodfin": {"calls": 43, "dm": 8, "sal": 1, "sql": 1}, "Josh Rieth": {"calls": 134, "dm": 13}, "Nisheet Shah": {"calls": 68, "dm": 8, "sal": 2}, "Michael Bernhardt": {"calls": 90, "dm": 10, "sal": 2}, "Bray Pettegrew": {"calls": 108, "dm": 18}}, "team_deltas": {"Brett": {"total_calls": 1207, "total_dm": 125, "total_sal": 6, "total_sql": 3}, "Dylan": {"total_calls": 1408, "total_dm": 160, "total_sal": 3, "total_sql": 2}, "Other": {"total_calls": 266, "total_dm": 36, "total_sal": 4}}};
 
-function findWinners(items, key, idField, lowerIsBetter = false) {
-  const valid = items.filter(x => x[key] !== null && x[key] !== undefined);
-  if (!valid.length) return {leaders: [], isTie: false};
-  const cmp = lowerIsBetter ? Math.min : Math.max;
-  const best = cmp(...valid.map(x => x[key]));
-  const winners = valid.filter(x => x[key] === best).map(x => x[idField]);
-  return {leaders: winners, isTie: winners.length > 1};
-}
+const STANDARDS = DATA.standards;
+const DAYS_ELAPSED = DATA.days_elapsed;
+const TOTAL_DAYS = DATA.working_days_in_month;
+const REP_DELTAS = DATA.rep_deltas || {};
+const TEAM_DELTAS = DATA.team_deltas || {};
 
-const TEAM_WIN = {
-  avg_calls: findWinners(DATA.teams, 'avg_calls', 'team'),
-  avg_dm: findWinners(DATA.teams, 'avg_dm', 'team'),
-  avg_sal: findWinners(DATA.teams, 'avg_sal', 'team'),
-  avg_sql: findWinners(DATA.teams, 'avg_sql', 'team'),
-  avg_cw: findWinners(DATA.teams, 'avg_cw', 'team'),
-  total_rv: findWinners(DATA.teams, 'total_rv', 'team'),
-  team_avg_deal: findWinners(DATA.teams, 'team_avg_deal', 'team'),
-  team_sit_rate: findWinners(DATA.teams, 'team_sit_rate', 'team'),
-  team_cr: findWinners(DATA.teams, 'team_cr', 'team'),
-  avg_dm_per_sal: findWinners(DATA.teams, 'avg_dm_per_sal', 'team', true),
-};
-
-const REP_WIN = {
-  calls: findWinners(DATA.reps, 'calls', 'rep'),
-  dm: findWinners(DATA.reps, 'dm', 'rep'),
-  sal: findWinners(DATA.reps, 'sal', 'rep'),
-  sql: findWinners(DATA.reps, 'sql', 'rep'),
-  cw: findWinners(DATA.reps, 'cw', 'rep'),
-  rv: findWinners(DATA.reps, 'rv', 'rep'),
-  avg_deal: findWinners(DATA.reps.filter(r => r.cw >= 1), 'avg_deal', 'rep'),
-  sit_rate: findWinners(DATA.reps.filter(r => r.sal >= 5), 'sit_rate', 'rep'),
-  cr: findWinners(DATA.reps.filter(r => r.sql >= 3), 'cr', 'rep'),
-  dm_per_sal: findWinners(DATA.reps.filter(r => r.dm_per_sal !== null && r.sal >= 5), 'dm_per_sal', 'rep', true),
-};
-
-const fmt = n => typeof n === 'number' ? n.toLocaleString('en-US', {maximumFractionDigits: 1}) : n;
+const fmt = n => typeof n === 'number' ? n.toLocaleString('en-US', {maximumFractionDigits: 1}) : (n || 0);
 const fmtCurrencyShort = n => {
   if (!n && n !== 0) return '—';
   if (n >= 1000) return '$' + (n / 1000).toFixed(1) + 'k';
   return '$' + n.toLocaleString();
 };
 
-const REP_DELTAS = DATA.rep_deltas || {};
-const TEAM_DELTAS = DATA.team_deltas || {};
-
-// Render delta arrow for a metric — shows nothing if no positive change
-function repDelta(rep, key, opts = {}) {
+// Delta arrow renderers — only shows positive overnight changes
+function repDelta(rep, key) {
   const d = REP_DELTAS[rep];
   if (!d || !d[key]) return '';
-  const val = d[key];
-  let display = val;
-  if (opts.currency) display = fmtCurrencyShort(val);
-  else if (opts.pct) display = val + 'pt';
-  else if (opts.ratio) display = val.toFixed(1);
-  return `<span class="delta-up">${display}</span>`;
+  return `<span class="delta-up">${d[key]}</span>`;
 }
-
-function teamDelta(team, key, opts = {}) {
+function teamDelta(team, key) {
   const d = TEAM_DELTAS[team];
   if (!d || !d[key]) return '';
-  const val = d[key];
-  let display = val;
-  if (opts.currency) display = fmtCurrencyShort(val);
-  else if (opts.pct) display = val.toFixed(1) + 'pt';
-  else if (opts.ratio) display = val.toFixed(1);
-  return `<span class="delta-up">${display}</span>`;
+  return `<span class="delta-up">${d[key]}</span>`;
 }
 
-function statusFor(winState, name) {
-  if (!winState.leaders.includes(name)) return '';
-  return winState.isTie ? 'tied' : 'leader';
+// Pace calculation: how is the rep/team doing vs target at THIS day?
+// Returns 'green' (>=100% pace), 'yellow' (75-99%), 'red' (<75%), or 'zero' (no data yet)
+function paceStatus(actual, dailyTarget, daysElapsed) {
+  if (daysElapsed === 0) return 'zero';
+  const expectedSoFar = dailyTarget * daysElapsed;
+  if (expectedSoFar === 0) return 'zero';
+  const pct = actual / expectedSoFar;
+  if (pct >= 1.0) return 'green';
+  if (pct >= 0.75) return 'yellow';
+  return 'red';
 }
 
-// === STANDINGS VIEW (team cards w/ inline drill-down) ===
+function paceFillPct(actual, dailyTarget, totalDays) {
+  // Bar fills from 0 to 100% of monthly target
+  const monthlyTarget = dailyTarget * totalDays;
+  if (monthlyTarget === 0) return 0;
+  return Math.min(100, (actual / monthlyTarget) * 100);
+}
+
 function renderTeamCards() {
   const grid = document.getElementById('teamGrid');
-  grid.innerHTML = DATA.teams.map(t => {
-    const cls = t.team.toLowerCase();
-    const stat = key => statusFor(TEAM_WIN[key], t.team);
-    const kpiClass = s => s === 'leader' ? 'is-leader' : s === 'tied' ? 'is-tied' : '';
-    const icon = s => s === 'leader' ? '<span class="kpi-crown">👑</span>' : s === 'tied' ? '<span class="kpi-crown">🔥</span>' : '';
+  // Only render Brett and Dylan in main grid
+  const mainTeams = DATA.teams.filter(t => t.team !== 'TBD' && t.team !== 'Other');
+  const tbdTeam = DATA.teams.find(t => t.team === 'TBD' || t.team === 'Other');
 
-    const sSAL=stat('avg_sal'), sSQL=stat('avg_sql'), sCW=stat('avg_cw'), sRV=stat('total_rv'), sDeal=stat('team_avg_deal');
-    const sSit=stat('team_sit_rate'), sCR=stat('team_cr'), sEff=stat('avg_dm_per_sal'), sDM=stat('avg_dm'), sCalls=stat('avg_calls');
+  const cardsHTML = mainTeams.map(t => {
+    const cls = t.team.toLowerCase();
+    const repsInTeam = DATA.reps.filter(r => r.team === t.team);
+    const repCount = repsInTeam.length;
+
+    const callsTarget = STANDARDS.calls_per_day * repCount;
+    const dmTarget = STANDARDS.dm_per_day * repCount;
+    const salWeeklyTarget = STANDARDS.sal_per_week * repCount;
+    const sqlWeeklyTarget = STANDARDS.sql_per_week * repCount;
+    const cwMonthlyTarget = STANDARDS.cw_per_month * repCount;
+
+    const callsPace = paceStatus(t.total_calls, callsTarget, DAYS_ELAPSED);
+    const dmPace = paceStatus(t.total_dm, dmTarget, DAYS_ELAPSED);
+    const salPace = paceStatus(t.total_sal, salWeeklyTarget / 5, DAYS_ELAPSED);
+    const sqlPace = paceStatus(t.total_sql, sqlWeeklyTarget / 5, DAYS_ELAPSED);
+    const cwPace = paceStatus(t.total_cw, cwMonthlyTarget / TOTAL_DAYS, DAYS_ELAPSED);
 
     return `
-      <div class="team-block" id="block-${t.team}">
+      <div class="team-block">
         <div class="team-card ${cls}" data-team="${t.team}" onclick="toggleDrill('${t.team}')">
           <div class="team-tag-row">
             <div class="team-name"><span class="swatch"></span>${t.team}'s Team</div>
             <div class="rep-count">${t.rep_count} reps</div>
           </div>
-          <div class="kpi-stack">
-            <div class="kpi ${kpiClass(sSAL)}"><div class="kpi-label">SALs (avg)${icon(sSAL)}</div><div class="kpi-value">${t.avg_sal}</div><div class="kpi-sub">${t.total_sal} total ${teamDelta(t.team, 'total_sal')}</div></div>
-            <div class="kpi ${kpiClass(sSQL)}"><div class="kpi-label">SQLs (avg)${icon(sSQL)}</div><div class="kpi-value">${t.avg_sql}</div><div class="kpi-sub">${t.total_sql} total ${teamDelta(t.team, 'total_sql')}</div></div>
-            <div class="kpi ${kpiClass(sCW)}"><div class="kpi-label">CW (avg)${icon(sCW)}</div><div class="kpi-value">${t.avg_cw}</div><div class="kpi-sub">${t.total_cw} total ${teamDelta(t.team, 'total_cw')}</div></div>
-            <div class="kpi ${kpiClass(sRV)}"><div class="kpi-label">Recurring Rev${icon(sRV)}</div><div class="kpi-value">${fmtCurrencyShort(t.total_rv)}</div><div class="kpi-sub">avg ${fmtCurrencyShort(t.avg_rv)} / rep ${teamDelta(t.team, 'total_rv', {currency:true})}</div></div>
-            <div class="kpi ${kpiClass(sDeal)}"><div class="kpi-label">Avg Deal${icon(sDeal)}</div><div class="kpi-value">${fmtCurrencyShort(t.team_avg_deal)}</div><div class="kpi-sub">all sources ${teamDelta(t.team, 'team_avg_deal', {currency:true})}</div></div>
-            <div class="kpi ${kpiClass(sSit)}"><div class="kpi-label">Sit Rate${icon(sSit)}</div><div class="kpi-value">${t.team_sit_rate}<span style="font-size:13px;color:var(--ink-mute);font-weight:500">%</span></div><div class="kpi-sub">SQL ÷ SAL ${teamDelta(t.team, 'team_sit_rate', {pct:true})}</div></div>
-            <div class="kpi ${kpiClass(sCR)}"><div class="kpi-label">Close Rate${icon(sCR)}</div><div class="kpi-value">${t.team_cr}<span style="font-size:13px;color:var(--ink-mute);font-weight:500">%</span></div><div class="kpi-sub">CW ÷ SQL ${teamDelta(t.team, 'team_cr', {pct:true})}</div></div>
-            <div class="kpi ${kpiClass(sEff)}"><div class="kpi-label">DM:SAL${icon(sEff)}</div><div class="kpi-value">${t.avg_dm_per_sal}<span style="font-size:13px;color:var(--ink-mute);font-weight:500">:1</span></div><div class="kpi-sub">connects per SAL ${teamDelta(t.team, 'avg_dm_per_sal', {ratio:true})}</div></div>
-            <div class="kpi ${kpiClass(sDM)}"><div class="kpi-label">DM Connects${icon(sDM)}</div><div class="kpi-value">${fmt(t.avg_dm)}</div><div class="kpi-sub">${fmt(t.total_dm)} total ${teamDelta(t.team, 'total_dm')}</div></div>
-            <div class="kpi ${kpiClass(sCalls)}"><div class="kpi-label">Calls (avg)${icon(sCalls)}</div><div class="kpi-value">${fmt(t.avg_calls)}</div><div class="kpi-sub">${fmt(t.total_calls)} total ${teamDelta(t.team, 'total_calls')}</div></div>
+
+          <div class="rv-banner">
+            <div class="rv-stack">
+              <div class="rv-label">May Recurring Revenue</div>
+              <div class="rv-value">${fmtCurrencyShort(t.total_rv)}</div>
+              <div class="rv-meta">${t.total_cw} CW · target $500k+</div>
+            </div>
+            <div class="rv-april">
+              April<span class="num">${fmtCurrencyShort(t.april_total_rv)}</span>
+            </div>
           </div>
+
+          <div class="carry-row">
+            <span class="label">April Carry</span>
+            <span class="num">${t.team_carry}</span>
+            <span>open SALs walking in</span>
+            <span class="carry-help">(work these — they sit faster)</span>
+          </div>
+
+          <div class="section-divider">
+            <span class="divider-label">Outcomes</span>
+          </div>
+
+          <div class="pace-grid pace-grid-outcomes">
+            <div class="pace-tile is-${cwPace === 'green' ? 'on-pace' : cwPace === 'yellow' ? 'warning' : cwPace === 'red' ? 'behind' : ''}">
+              <div class="pace-label">Closed Won<span class="pace-target">${cwMonthlyTarget}/month · team</span></div>
+              <div class="pace-value-row">
+                <span class="pace-value">${t.total_cw}${teamDelta(t.team, 'total_cw')}</span>
+                <span class="pace-needed">need ${cwMonthlyTarget}</span>
+              </div>
+              <div class="pace-bar"><div class="pace-fill ${cwPace}" style="width:${paceFillPct(t.total_cw, cwMonthlyTarget / TOTAL_DAYS, TOTAL_DAYS)}%"></div></div>
+            </div>
+
+            <div class="pace-tile is-${sqlPace === 'green' ? 'on-pace' : sqlPace === 'yellow' ? 'warning' : sqlPace === 'red' ? 'behind' : ''}">
+              <div class="pace-label">SQLs<span class="pace-target">${sqlWeeklyTarget}/week · team</span></div>
+              <div class="pace-value-row">
+                <span class="pace-value">${t.total_sql}${teamDelta(t.team, 'total_sql')}</span>
+                <span class="pace-needed">need ${Math.round(sqlWeeklyTarget * 4.4)}</span>
+              </div>
+              <div class="pace-bar"><div class="pace-fill ${sqlPace}" style="width:${paceFillPct(t.total_sql, sqlWeeklyTarget / 5, TOTAL_DAYS)}%"></div></div>
+            </div>
+
+            <div class="pace-tile is-${salPace === 'green' ? 'on-pace' : salPace === 'yellow' ? 'warning' : salPace === 'red' ? 'behind' : ''}">
+              <div class="pace-label">SALs<span class="pace-target">${salWeeklyTarget}/week · team</span></div>
+              <div class="pace-value-row">
+                <span class="pace-value">${t.total_sal}${teamDelta(t.team, 'total_sal')}</span>
+                <span class="pace-needed">need ${Math.round(salWeeklyTarget * 4.4)}</span>
+              </div>
+              <div class="pace-bar"><div class="pace-fill ${salPace}" style="width:${paceFillPct(t.total_sal, salWeeklyTarget / 5, TOTAL_DAYS)}%"></div></div>
+            </div>
+          </div>
+
+          <div class="section-divider activity-divider">
+            <span class="divider-label">Activity</span>
+          </div>
+
+          <div class="pace-grid pace-grid-activity">
+            <div class="pace-tile is-${dmPace === 'green' ? 'on-pace' : dmPace === 'yellow' ? 'warning' : dmPace === 'red' ? 'behind' : ''}">
+              <div class="pace-label">DM Connects<span class="pace-target">${STANDARDS.dm_per_day}/day · per rep</span></div>
+              <div class="pace-value-row">
+                <span class="pace-value">${fmt(t.total_dm)}${teamDelta(t.team, 'total_dm')}</span>
+                <span class="pace-needed">need ${fmt(dmTarget * TOTAL_DAYS)}</span>
+              </div>
+              <div class="pace-bar"><div class="pace-fill ${dmPace}" style="width:${paceFillPct(t.total_dm, dmTarget, TOTAL_DAYS)}%"></div></div>
+            </div>
+
+            <div class="pace-tile is-${callsPace === 'green' ? 'on-pace' : callsPace === 'yellow' ? 'warning' : callsPace === 'red' ? 'behind' : ''}">
+              <div class="pace-label">Calls<span class="pace-target">${STANDARDS.calls_per_day}/day · per rep</span></div>
+              <div class="pace-value-row">
+                <span class="pace-value">${fmt(t.total_calls)}${teamDelta(t.team, 'total_calls')}</span>
+                <span class="pace-needed">need ${fmt(callsTarget * TOTAL_DAYS)}</span>
+              </div>
+              <div class="pace-bar"><div class="pace-fill ${callsPace}" style="width:${paceFillPct(t.total_calls, callsTarget, TOTAL_DAYS)}%"></div></div>
+            </div>
+          </div>
+
           <div class="expand-hint">
             <span>see reps</span>
             <span class="arrow">▼</span>
@@ -1041,146 +1631,225 @@ function renderTeamCards() {
         <div class="drilldown ${cls}" id="drill-${t.team}"></div>
       </div>
     `;
-  }).join('');
+  });
+
+  // Insert VS divider between the two teams
+  grid.innerHTML = cardsHTML[0] + '<div class="vs-divider">VS</div>' + cardsHTML[1];
+
+  // Other OB section (Danny/Troy reps)
+  const tbdContainer = document.getElementById('tbdSection');
+  if (tbdTeam && tbdTeam.rep_count > 0) {
+    const tbdReps = DATA.reps.filter(r => r.team === 'TBD' || r.team === 'Other');
+
+    // Manager mapping for Other reps
+    const REP_TO_MGR = {
+      'Trevor Schliefer': 'Danny',
+      'Jonathan Munday': 'Danny',
+      'Nisheet Shah': 'Troy',
+      'Michael Bernhardt': 'Troy',
+      'Bray Pettegrew': 'Troy',
+    };
+
+    const otherCallsTarget = STANDARDS.calls_per_day * tbdTeam.rep_count;
+    const otherDmTarget = STANDARDS.dm_per_day * tbdTeam.rep_count;
+    const otherSalWeekly = STANDARDS.sal_per_week * tbdTeam.rep_count;
+    const otherCwTarget = STANDARDS.cw_per_month * tbdTeam.rep_count;
+
+    tbdContainer.innerHTML = `
+      <div class="tbd-section" id="otherSection" onclick="toggleOtherDrill()">
+        <div class="tbd-header">
+          <div class="tbd-title">Other OB · Danny + Troy</div>
+          <div class="tbd-meta">${tbdTeam.rep_count} reps · ${tbdTeam.team_carry} carry</div>
+        </div>
+
+        <div class="other-rep-count">
+          ${tbdReps.map(r => `
+            <span class="other-rep-pill">
+              <span>${r.rep}</span>
+              <span class="mgr-tag">${REP_TO_MGR[r.rep] || '?'}</span>
+              ${r.april_carry > 0 ? `<span class="carry-mini">${r.april_carry} carry</span>` : ''}
+              ${r.is_new_hire ? '<span class="new-hire-badge" style="margin-left:0">NEW</span>' : ''}
+            </span>
+          `).join('')}
+        </div>
+
+        <div class="other-kpi-strip">
+          <div class="other-kpi">
+            <div class="other-kpi-label">RV</div>
+            <div class="other-kpi-value">${fmtCurrencyShort(tbdTeam.total_rv)}</div>
+            <div class="other-kpi-sub">${tbdTeam.total_cw} CW</div>
+          </div>
+          <div class="other-kpi">
+            <div class="other-kpi-label">SQLs</div>
+            <div class="other-kpi-value">${tbdTeam.total_sql}</div>
+            <div class="other-kpi-sub">need ${Math.round(otherSalWeekly * 4.4)}</div>
+          </div>
+          <div class="other-kpi">
+            <div class="other-kpi-label">SALs</div>
+            <div class="other-kpi-value">${tbdTeam.total_sal}</div>
+            <div class="other-kpi-sub">need ${Math.round(otherSalWeekly * 4.4)}</div>
+          </div>
+          <div class="other-kpi">
+            <div class="other-kpi-label">DM</div>
+            <div class="other-kpi-value">${fmt(tbdTeam.total_dm)}</div>
+            <div class="other-kpi-sub">need ${fmt(otherDmTarget * TOTAL_DAYS)}</div>
+          </div>
+          <div class="other-kpi">
+            <div class="other-kpi-label">Calls</div>
+            <div class="other-kpi-value">${fmt(tbdTeam.total_calls)}</div>
+            <div class="other-kpi-sub">need ${fmt(otherCallsTarget * TOTAL_DAYS)}</div>
+          </div>
+        </div>
+
+        <div class="tbd-expand-hint">
+          <span>see reps</span>
+          <span class="arrow">▼</span>
+        </div>
+      </div>
+      <div class="other-drilldown" id="otherDrill"></div>
+    `;
+  } else {
+    tbdContainer.innerHTML = '';
+  }
 }
 
 let openTeam = null;
 
 function toggleDrill(team) {
-  // Close currently open if clicking the same one
   if (openTeam === team) {
     document.getElementById(`drill-${team}`).classList.remove('is-open');
     document.querySelector(`[data-team="${team}"]`).classList.remove('is-active');
     openTeam = null;
     return;
   }
-
-  // Close any other open team first
   if (openTeam) {
     document.getElementById(`drill-${openTeam}`).classList.remove('is-open');
     document.querySelector(`[data-team="${openTeam}"]`).classList.remove('is-active');
   }
-
   openTeam = team;
   document.querySelector(`[data-team="${team}"]`).classList.add('is-active');
 
-  const reps = DATA.reps.filter(r => r.team === team).sort((a,b) => b.rv - a.rv || b.cw - a.cw || b.sql - a.sql);
-
-  const repCellClass = (key, repName) => {
-    const s = statusFor(REP_WIN[key], repName);
-    return s === 'leader' ? 'is-rep-leader' : s === 'tied' ? 'is-rep-tied' : '';
-  };
-  const repIcon = (key, repName) => {
-    const s = statusFor(REP_WIN[key], repName);
-    return s === 'leader' ? '<span class="crown-mini">👑</span>' : s === 'tied' ? '<span class="crown-mini">🔥</span>' : '';
-  };
+  const reps = DATA.reps.filter(r => r.team === team).sort((a,b) => b.rv - a.rv || b.cw - a.cw || b.sal - a.sal);
+  const showCarry = document.body.classList.contains('show-carry');
 
   const drill = document.getElementById(`drill-${team}`);
   drill.innerHTML = `
     <div class="rep-table-header">
       <div>#</div>
       <div>Rep</div>
+      ${showCarry ? '<div class="metric" style="justify-content:flex-end">Carry</div>' : ''}
       <div class="metric" style="justify-content:flex-end">Calls</div>
       <div class="metric" style="justify-content:flex-end">DM</div>
       <div class="metric" style="justify-content:flex-end">SAL</div>
       <div class="metric" style="justify-content:flex-end">SQL</div>
       <div class="metric" style="justify-content:flex-end">CW</div>
       <div class="metric" style="justify-content:flex-end">RV</div>
-      <div class="metric" style="justify-content:flex-end">Avg Deal</div>
       <div class="metric" style="justify-content:flex-end">Sit %</div>
       <div class="metric" style="justify-content:flex-end">CR %</div>
-      <div class="metric" style="justify-content:flex-end">DM:SAL</div>
     </div>
-    ${reps.map((r, i) => `
-      <div class="rep-row">
-        <div class="rep-rank">${i + 1}</div>
-        <div class="rep-name">${r.rep}</div>
-        <div class="metric ${repCellClass('calls', r.rep)}" data-label="Calls">${repIcon('calls', r.rep)}<span class="value-text">${fmt(r.calls)}</span>${repDelta(r.rep, 'calls')}</div>
-        <div class="metric ${repCellClass('dm', r.rep)}" data-label="DM">${repIcon('dm', r.rep)}<span class="value-text">${fmt(r.dm)}</span>${repDelta(r.rep, 'dm')}</div>
-        <div class="metric ${repCellClass('sal', r.rep)}" data-label="SAL">${repIcon('sal', r.rep)}<span class="value-text">${r.sal}</span>${repDelta(r.rep, 'sal')}</div>
-        <div class="metric ${repCellClass('sql', r.rep)}" data-label="SQL">${repIcon('sql', r.rep)}<span class="value-text">${r.sql}</span>${repDelta(r.rep, 'sql')}</div>
-        <div class="metric ${repCellClass('cw', r.rep)}" data-label="CW">${repIcon('cw', r.rep)}<span class="value-text">${r.cw}</span>${repDelta(r.rep, 'cw')}</div>
-        <div class="metric ${repCellClass('rv', r.rep)}" data-label="RV">${repIcon('rv', r.rep)}<span class="value-text">${fmtCurrencyShort(r.rv)}</span>${repDelta(r.rep, 'rv', {currency:true})}</div>
-        <div class="metric ${r.cw >= 1 ? repCellClass('avg_deal', r.rep) : ''}" data-label="Avg Deal">${r.cw >= 1 ? repIcon('avg_deal', r.rep) : ''}<span class="value-text">${r.avg_deal !== null ? fmtCurrencyShort(r.avg_deal) : '—'}</span></div>
-        <div class="metric ${r.sal >= 5 ? repCellClass('sit_rate', r.rep) : ''}" data-label="Sit %">${r.sal >= 5 ? repIcon('sit_rate', r.rep) : ''}<span class="value-text">${r.sit_rate !== null ? r.sit_rate + '%' : '—'}</span>${repDelta(r.rep, 'sit_rate', {pct:true})}</div>
-        <div class="metric ${r.sql >= 3 && r.cr !== null ? repCellClass('cr', r.rep) : ''}" data-label="CR %">${r.sql >= 3 && r.cr !== null ? repIcon('cr', r.rep) : ''}<span class="value-text">${r.cr !== null ? r.cr + '%' : '—'}</span>${repDelta(r.rep, 'cr', {pct:true})}</div>
-        <div class="metric ${r.sal >= 5 ? repCellClass('dm_per_sal', r.rep) : ''}" data-label="DM:SAL">${r.sal >= 5 ? repIcon('dm_per_sal', r.rep) : ''}<span class="value-text">${r.dm_per_sal !== null ? r.dm_per_sal + ':1' : '—'}</span>${repDelta(r.rep, 'dm_per_sal', {ratio:true})}</div>
-      </div>
-    `).join('')}
+    ${reps.map((r, i) => {
+      const callsPace = paceStatus(r.calls, STANDARDS.calls_per_day, DAYS_ELAPSED);
+      const dmPace = paceStatus(r.dm, STANDARDS.dm_per_day, DAYS_ELAPSED);
+      const salPace = paceStatus(r.sal, STANDARDS.sal_per_week / 5, DAYS_ELAPSED);
+      const cwPace = paceStatus(r.cw, STANDARDS.cw_per_month / TOTAL_DAYS, DAYS_ELAPSED);
+      const carryClass = r.april_carry >= 18 ? 'high' : '';
+
+      return `
+        <div class="rep-row">
+          <div class="rep-rank">${i + 1}</div>
+          <div class="rep-name">${r.rep}${r.is_new_hire ? '<span class="new-hire-badge">NEW</span>' : ''}</div>
+          ${showCarry ? `<div class="metric" data-label="Carry"><span class="carry-cell ${carryClass}">${r.april_carry}</span></div>` : ''}
+          <div class="metric" data-label="Calls"><span class="pace-dot ${callsPace}"></span><span class="value-text">${fmt(r.calls)}</span>${repDelta(r.rep, 'calls')}</div>
+          <div class="metric" data-label="DM"><span class="pace-dot ${dmPace}"></span><span class="value-text">${fmt(r.dm)}</span>${repDelta(r.rep, 'dm')}</div>
+          <div class="metric" data-label="SAL"><span class="pace-dot ${salPace}"></span><span class="value-text">${r.sal}</span>${repDelta(r.rep, 'sal')}</div>
+          <div class="metric" data-label="SQL"><span class="value-text">${r.sql}</span>${repDelta(r.rep, 'sql')}</div>
+          <div class="metric" data-label="CW"><span class="pace-dot ${cwPace}"></span><span class="value-text">${r.cw}</span>${repDelta(r.rep, 'cw')}</div>
+          <div class="metric" data-label="RV"><span class="value-text">${fmtCurrencyShort(r.rv)}</span></div>
+          <div class="metric" data-label="Sit %"><span class="value-text">${r.sit_rate !== null ? r.sit_rate + '%' : '—'}</span></div>
+          <div class="metric" data-label="CR %"><span class="value-text">${r.cr !== null ? r.cr + '%' : '—'}</span></div>
+        </div>
+      `;
+    }).join('')}
   `;
   drill.classList.add('is-open');
 }
 
-// === LEADERBOARD VIEW ===
-let activeTeamFilter = 'all';
-let lbSortKey = 'rv';
-
-function getFiltered() {
-  return activeTeamFilter === 'all' ? [...DATA.reps] : DATA.reps.filter(r => r.team === activeTeamFilter);
+function toggleCarry() {
+  document.body.classList.toggle('show-carry');
+  const btn = document.getElementById('carryToggle');
+  btn.classList.toggle('active');
+  // Re-render the open drilldown if any
+  if (openTeam) {
+    const t = openTeam;
+    openTeam = null;  // force re-toggle
+    toggleDrill(t);
+  }
 }
 
-function getSorted(arr) {
-  return [...arr].sort((a, b) => {
-    const av = a[lbSortKey], bv = b[lbSortKey];
-    // Lower-is-better for dm_per_sal
-    if (lbSortKey === 'dm_per_sal') {
-      if (av === null && bv === null) return 0;
-      if (av === null) return 1;
-      if (bv === null) return -1;
-      return av - bv;
-    }
-    const aval = (av === null || av === undefined) ? -Infinity : av;
-    const bval = (bv === null || bv === undefined) ? -Infinity : bv;
-    if (bval !== aval) return bval - aval;
-    return b.rv - a.rv || b.cw - a.cw || b.sql - a.sql;
-  });
-}
+let otherOpen = false;
 
-function renderLeaderboard() {
-  const sorted = getSorted(getFiltered());
-  const repCellClass = (key, repName) => {
-    const s = statusFor(REP_WIN[key], repName);
-    return s === 'leader' ? 'is-rep-leader' : s === 'tied' ? 'is-rep-tied' : '';
+function toggleOtherDrill() {
+  const section = document.getElementById('otherSection');
+  const drill = document.getElementById('otherDrill');
+
+  if (otherOpen) {
+    section.classList.remove('is-active');
+    drill.classList.remove('is-open');
+    otherOpen = false;
+    return;
+  }
+
+  // Build the drilldown content
+  const reps = DATA.reps.filter(r => r.team === 'Other' || r.team === 'TBD').sort((a,b) => b.rv - a.rv || b.cw - a.cw);
+  const REP_TO_MGR = {
+    'Trevor Schliefer': 'Danny',
+    'Jonathan Munday': 'Danny',
+    'Nisheet Shah': 'Troy',
+    'Michael Bernhardt': 'Troy',
+    'Bray Pettegrew': 'Troy',
   };
-  const repIcon = (key, repName) => {
-    const s = statusFor(REP_WIN[key], repName);
-    return s === 'leader' ? '<span class="crown-mini">👑</span>' : s === 'tied' ? '<span class="crown-mini">🔥</span>' : '';
-  };
+  const showCarry = document.body.classList.contains('show-carry');
 
-  document.getElementById('lbRows').innerHTML = sorted.map((r, i) => {
-    const rank = i + 1;
-    const rankClass = rank <= 3 ? `top-${rank}` : '';
-    const teamLower = r.team.toLowerCase();
-    const isDB = r.team === 'Dylan';
+  drill.innerHTML = `
+    <div class="rep-table-header">
+      <div>#</div>
+      <div>Rep</div>
+      ${showCarry ? '<div class="metric" style="justify-content:flex-end">Carry</div>' : ''}
+      <div class="metric" style="justify-content:flex-end">Mgr</div>
+      <div class="metric" style="justify-content:flex-end">Calls</div>
+      <div class="metric" style="justify-content:flex-end">DM</div>
+      <div class="metric" style="justify-content:flex-end">SAL</div>
+      <div class="metric" style="justify-content:flex-end">SQL</div>
+      <div class="metric" style="justify-content:flex-end">CW</div>
+      <div class="metric" style="justify-content:flex-end">RV</div>
+    </div>
+    ${reps.map((r, i) => {
+      const callsPace = paceStatus(r.calls, STANDARDS.calls_per_day, DAYS_ELAPSED);
+      const dmPace = paceStatus(r.dm, STANDARDS.dm_per_day, DAYS_ELAPSED);
+      const salPace = paceStatus(r.sal, STANDARDS.sal_per_week / 5, DAYS_ELAPSED);
+      const cwPace = paceStatus(r.cw, STANDARDS.cw_per_month / TOTAL_DAYS, DAYS_ELAPSED);
+      const carryClass = r.april_carry >= 18 ? 'high' : '';
 
-    return `
-      <div class="lb-row ${isDB ? 'is-db' : ''}">
-        <div class="rank ${rankClass}">${rank}</div>
-        <div class="rep-cell">
-          <div class="team-tag ${teamLower}"></div>
-          <div class="rep-name-stack">
-            <span>${r.rep}</span>
-            <span class="mgr">${r.team}'s team</span>
-          </div>
+      return `
+        <div class="rep-row">
+          <div class="rep-rank">${i + 1}</div>
+          <div class="rep-name">${r.rep}${r.is_new_hire ? '<span class="new-hire-badge">NEW</span>' : ''}</div>
+          ${showCarry ? `<div class="metric" data-label="Carry"><span class="carry-cell ${carryClass}">${r.april_carry}</span></div>` : ''}
+          <div class="metric" data-label="Mgr"><span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ink-mute);letter-spacing:0.06em">${REP_TO_MGR[r.rep] || '—'}</span></div>
+          <div class="metric" data-label="Calls"><span class="pace-dot ${callsPace}"></span><span class="value-text">${fmt(r.calls)}</span>${repDelta(r.rep, 'calls')}</div>
+          <div class="metric" data-label="DM"><span class="pace-dot ${dmPace}"></span><span class="value-text">${fmt(r.dm)}</span>${repDelta(r.rep, 'dm')}</div>
+          <div class="metric" data-label="SAL"><span class="pace-dot ${salPace}"></span><span class="value-text">${r.sal}</span>${repDelta(r.rep, 'sal')}</div>
+          <div class="metric" data-label="SQL"><span class="value-text">${r.sql}</span>${repDelta(r.rep, 'sql')}</div>
+          <div class="metric" data-label="CW"><span class="pace-dot ${cwPace}"></span><span class="value-text">${r.cw}</span>${repDelta(r.rep, 'cw')}</div>
+          <div class="metric" data-label="RV"><span class="value-text">${fmtCurrencyShort(r.rv)}</span></div>
         </div>
-        <div><span class="team-pill ${teamLower}">${r.team.slice(0,4)}</span></div>
-        <div class="metric ${repCellClass('calls', r.rep)} ${lbSortKey==='calls'?'bold':''}" data-label="Calls">${repIcon('calls', r.rep)}<span class="value-text">${fmt(r.calls)}</span>${repDelta(r.rep, 'calls')}</div>
-        <div class="metric ${repCellClass('dm', r.rep)} ${lbSortKey==='dm'?'bold':''}" data-label="DM">${repIcon('dm', r.rep)}<span class="value-text">${fmt(r.dm)}</span>${repDelta(r.rep, 'dm')}</div>
-        <div class="metric ${repCellClass('sal', r.rep)} ${lbSortKey==='sal'?'bold':''}" data-label="SAL">${repIcon('sal', r.rep)}<span class="value-text">${r.sal}</span>${repDelta(r.rep, 'sal')}</div>
-        <div class="metric ${repCellClass('sql', r.rep)} ${lbSortKey==='sql'?'bold':''}" data-label="SQL">${repIcon('sql', r.rep)}<span class="value-text">${r.sql}</span>${repDelta(r.rep, 'sql')}</div>
-        <div class="metric ${repCellClass('cw', r.rep)} ${lbSortKey==='cw'?'bold':''}" data-label="CW">${repIcon('cw', r.rep)}<span class="value-text">${r.cw}</span>${repDelta(r.rep, 'cw')}</div>
-        <div class="metric ${repCellClass('rv', r.rep)} ${lbSortKey==='rv'?'bold':''}" data-label="RV">${repIcon('rv', r.rep)}<span class="value-text">${fmtCurrencyShort(r.rv)}</span>${repDelta(r.rep, 'rv', {currency:true})}</div>
-        <div class="metric ${r.cw >= 1 ? repCellClass('avg_deal', r.rep) : ''} ${lbSortKey==='avg_deal'?'bold':''}" data-label="Avg Deal">${r.cw >= 1 ? repIcon('avg_deal', r.rep) : ''}<span class="value-text">${r.avg_deal !== null ? fmtCurrencyShort(r.avg_deal) : '—'}</span></div>
-        <div class="metric ${r.sal >= 5 ? repCellClass('sit_rate', r.rep) : ''} ${lbSortKey==='sit_rate'?'bold':''}" data-label="Sit %">${r.sal >= 5 ? repIcon('sit_rate', r.rep) : ''}<span class="value-text">${r.sit_rate !== null ? r.sit_rate + '%' : '—'}</span>${repDelta(r.rep, 'sit_rate', {pct:true})}</div>
-        <div class="metric ${r.sql >= 3 && r.cr !== null ? repCellClass('cr', r.rep) : ''} ${lbSortKey==='cr'?'bold':''}" data-label="CR %">${r.sql >= 3 && r.cr !== null ? repIcon('cr', r.rep) : ''}<span class="value-text">${r.cr !== null ? r.cr + '%' : '—'}</span>${repDelta(r.rep, 'cr', {pct:true})}</div>
-        <div class="metric ${r.sal >= 5 ? repCellClass('dm_per_sal', r.rep) : ''} ${lbSortKey==='dm_per_sal'?'bold':''}" data-label="DM:SAL">${r.sal >= 5 ? repIcon('dm_per_sal', r.rep) : ''}<span class="value-text">${r.dm_per_sal !== null ? r.dm_per_sal + ':1' : '—'}</span>${repDelta(r.rep, 'dm_per_sal', {ratio:true})}</div>
-      </div>
-    `;
-  }).join('');
+      `;
+    }).join('')}
+  `;
 
-  document.querySelectorAll('.lb-header .sortable').forEach(el => {
-    el.classList.toggle('active', el.dataset.sort === lbSortKey);
-  });
+  section.classList.add('is-active');
+  drill.classList.add('is-open');
+  otherOpen = true;
 }
 
 // Tab switching
@@ -1193,7 +1862,71 @@ document.querySelectorAll('.tab').forEach(t => {
   });
 });
 
-// Filter chips
+// LEADERBOARD logic
+let activeTeamFilter = 'all';
+let lbSortKey = 'sql';
+
+function getFilteredReps() {
+  const reps = activeTeamFilter === 'all'
+    ? DATA.reps.filter(r => r.team !== 'TBD')
+    : DATA.reps.filter(r => r.team === activeTeamFilter);
+  return reps;
+}
+
+function getSortedReps(arr) {
+  return [...arr].sort((a, b) => {
+    const av = a[lbSortKey] ?? -Infinity;
+    const bv = b[lbSortKey] ?? -Infinity;
+    if (bv !== av) return bv - av;
+    // Tiebreakers: rv > cw > sql > sal
+    return b.rv - a.rv || b.cw - a.cw || b.sql - a.sql || b.sal - a.sal;
+  });
+}
+
+const REP_TO_MGR_LB = {
+  'Trevor Schliefer': 'Danny',
+  'Jonathan Munday': 'Danny',
+  'Nisheet Shah': 'Troy',
+  'Michael Bernhardt': 'Troy',
+  'Bray Pettegrew': 'Troy',
+};
+
+function renderLeaderboard() {
+  const sorted = getSortedReps(getFilteredReps());
+  document.getElementById('lbRows').innerHTML = sorted.map((r, i) => {
+    const rank = i + 1;
+    const rankClass = rank <= 3 ? `top-${rank}` : '';
+    const teamLower = r.team.toLowerCase();
+    const isDB = r.team === 'Dylan';
+    const mgrLabel = r.team === 'Other' ? (REP_TO_MGR_LB[r.rep] || 'Other') : `${r.team}'s team`;
+    const teamPillLabel = r.team === 'Other' ? (REP_TO_MGR_LB[r.rep] || 'Other').slice(0,4) : r.team.slice(0,4);
+
+    return `
+      <div class="lb-row ${isDB ? 'is-db' : ''}">
+        <div class="rank ${rankClass}">${rank}</div>
+        <div class="rep-cell">
+          <div class="team-tag ${teamLower}"></div>
+          <div class="rep-name-stack">
+            <span>${r.rep}${r.is_new_hire ? '<span class="new-hire-badge">NEW</span>' : ''}</span>
+            <span class="mgr">${mgrLabel}</span>
+          </div>
+        </div>
+        <div><span class="team-pill ${teamLower}">${teamPillLabel}</span></div>
+        <div class="metric ${lbSortKey==='calls'?'bold':''}" data-label="Calls"><span class="value-text">${fmt(r.calls)}</span>${repDelta(r.rep, 'calls')}</div>
+        <div class="metric ${lbSortKey==='dm'?'bold':''}" data-label="DM"><span class="value-text">${fmt(r.dm)}</span>${repDelta(r.rep, 'dm')}</div>
+        <div class="metric ${lbSortKey==='sal'?'bold':''}" data-label="SAL"><span class="value-text">${r.sal}</span>${repDelta(r.rep, 'sal')}</div>
+        <div class="metric ${lbSortKey==='sql'?'bold':''}" data-label="SQL"><span class="value-text">${r.sql}</span>${repDelta(r.rep, 'sql')}</div>
+        <div class="metric ${lbSortKey==='cw'?'bold':''}" data-label="CW"><span class="value-text">${r.cw}</span>${repDelta(r.rep, 'cw')}</div>
+        <div class="metric ${lbSortKey==='rv'?'bold':''}" data-label="RV"><span class="value-text">${fmtCurrencyShort(r.rv)}</span></div>
+      </div>
+    `;
+  }).join('');
+
+  document.querySelectorAll('.lb-header .sortable').forEach(el => {
+    el.classList.toggle('active', el.dataset.sort === lbSortKey);
+  });
+}
+
 document.getElementById('filterGroup').addEventListener('click', e => {
   const chip = e.target.closest('.chip');
   if (!chip) return;
@@ -1203,13 +1936,11 @@ document.getElementById('filterGroup').addEventListener('click', e => {
   renderLeaderboard();
 });
 
-// Sort dropdown
 document.getElementById('sortBy').addEventListener('change', e => {
   lbSortKey = e.target.value;
   renderLeaderboard();
 });
 
-// Sortable column headers
 document.querySelectorAll('.lb-header .sortable').forEach(el => {
   el.addEventListener('click', () => {
     lbSortKey = el.dataset.sort;
@@ -1218,10 +1949,11 @@ document.querySelectorAll('.lb-header .sortable').forEach(el => {
   });
 });
 
-// Date label
-const today = new Date();
-const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-document.getElementById('dateLabel').textContent = `${months[today.getMonth()]} ${today.getDate()}, ${today.getFullYear()}`;
+// Update day progress
+const daysElapsed = DATA.days_elapsed;
+const dayPct = (daysElapsed / TOTAL_DAYS) * 100;
+document.getElementById('dayProgress').textContent = `Day ${daysElapsed} of ${TOTAL_DAYS} · ${Math.round(dayPct)}% through`;
+document.getElementById('monthProgressFill').style.width = dayPct + '%';
 
 renderTeamCards();
 renderLeaderboard();
